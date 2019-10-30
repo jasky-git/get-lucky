@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form method="get">
+        Num of packs: <input type="number" name="" id=""> <br>
+        Date: <input type="date" name=""> <br> 
+        Category: 
+        <select name="category" id="">
+            <option value="">romance</option>
+            <option value="">formal</option>
+            <option value="4bf58dd8d48988d1e4931735,4bf58dd8d48988d182941735" selected>casual</option>
+        </select> <br>
+        Budget: 
+        <input type="radio" name="budget" id="">$ 
+        <input type="radio" name="budget" id="">$$
+        <input type="radio" name="budget" id="">$$$
+        <br>
+        Venue to start the date: <input type="text" name="" id="">
+        <br>
+        <input type="submit" value="Submit"> <input type="reset" value="Reset">
+    </form>
+
+    <div class="result"></div>
+    
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            
+            const budget = form.budget.value;
+            const category = form.category.value;
+
+            // console.log(category);
+
+            const categories = category.split(',');
+
+            // console.log(categories);
+
+            //get the first category > randomize > get one value
+            fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${categories[0]}&near=Orchard&client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
+            .then(response => response.json())
+            .then(data => {
+               console.log(data); 
+            });
+
+        });
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
