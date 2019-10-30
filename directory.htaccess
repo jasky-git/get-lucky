@@ -1,0 +1,11 @@
+AddType application/x-httpd-php .html .htm
+
+<FilesMatch "^(file_one|file_two|file_three)\.html$">
+  AddType application/x-httpd-php .html
+</FilesMatch>
+
+<FilesMatch "^file_name\.html$">
+AddType application/x-httpd-php .html
+</FilesMatch>
+
+DirectoryIndex home.php
