@@ -1,8 +1,94 @@
 <html>
     <head>
+    
+        <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap/bootstrap.min.js">
+
+        <style>
+            body{
+                background-color:#007FA6;
+            }
+
+            #signup-block{
+                width:700px;
+                height:900px;
+                margin-top:50px;
+                margin-left:auto;
+                margin-right:auto;
+                text-align:center;
+                color:white;
+                font-family: sans-serif;
+                
+            }
+
+            #signup-form{
+                margin-top:30px;
+                width:450px;
+                height:750px;
+                margin-left:auto;
+                margin-right:auto;
+                background-color:#F2ECEE;
+                color:black;
+                text-align:left;
+                padding: 20px 50px 0px 50px;
+            }
+
+            .button {
+                background-color: orange;
+                border: none;
+                color: white;
+                padding: 7px;
+                width:360px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+
+            .LoginButton {
+                background-color: blue;
+                border: none;
+                color: white;
+                padding: 7px;
+                width:360px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+
+        </style>
     </head>
 
     <body>
-        <h1>Create Account</h1>
+        <div id="signup-block">
+            <h1>Your last-minute trip planner starts here</h1>
+            <div id="signup-form">
+                    <h2 style="text-align:center">Create New Account</h2>
+                <form>
+                    <br>
+                    <label>User ID</label><br>
+                    <input type="text" name="userid" size="40" style="height:35px;"/>
+                    <br><br>
+                    <label>Password</label><br>
+                    <input type="password" name="password" size="40" style="height:35px;"/>
+                    <br><br>
+                    <label>Re-enter Password</label><br>
+                    <input type="password" name="re-password" size="40" style="height:35px;"/>
+                    <br><br>
+                    <label>Name</label><br>
+                    <input type="text" name="userid" size="40" style="height:35px;"/>
+                    <br><br>
+                    <label>Email</label><br>
+                    <input type="email" name="email" size="40" style="height:35px;"/>
+                    <br><br>
+                    <label>Telegram Username</label><br>
+                    <input type="text" name="tele"  size="40" style="height:35px;"/>
+                    <br><br>
+                    <button type="submit" class="button">Create Account</button> 
+                </form>
+                <input type="button" class="LoginButton" value="Already owned an account? Login here" onclick="window.location.href='login.php'" />
+            </div>
+        </div>
     </body>
 </html>
