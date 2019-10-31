@@ -24,7 +24,7 @@
             #signup-form{
                 margin-top:30px;
                 width:450px;
-                height:750px;
+                height:800px;
                 margin-left:auto;
                 margin-right:auto;
                 background-color:#F2ECEE;
@@ -43,6 +43,7 @@
                 text-decoration: none;
                 display: inline-block;
                 font-size: 16px;
+                margin-top:10px;
             }
 
             .LoginButton {
@@ -65,30 +66,45 @@
             <h1>Your last-minute trip planner starts here</h1>
             <div id="signup-form">
                     <h2 style="text-align:center">Create New Account</h2>
-                <form>
+                <form method="post" action="create_account_process.php">
                     <br>
                     <label>User ID</label><br>
-                    <input type="text" name="userid" size="40" style="height:35px;"/>
+                    <input type="text" id="userid" name="userid" size="40" style="height:35px;" required />
                     <br><br>
                     <label>Password</label><br>
-                    <input type="password" name="password" size="40" style="height:35px;"/>
-                    <br><br>
+                    <input type="password" name="password" size="40" style="height:35px;" required />
+                    <br>
+                    <label id="pwderror" style="color:red;visibility:hidden;">Password doesn't match </label>
+                    <br>
                     <label>Re-enter Password</label><br>
-                    <input type="password" name="re-password" size="40" style="height:35px;"/>
-                    <br><br>
+                    <input type="password" name="re-password" size="40" style="height:35px;" required />
+                    <br>
+                    <label id="pwderror2" style="color:red;visibility:hidden;">Password doesn't match </label>
+                    <br>
                     <label>Name</label><br>
-                    <input type="text" name="userid" size="40" style="height:35px;"/>
+                    <input type="text" id="name" name="name" size="40" style="height:35px;" required />
                     <br><br>
                     <label>Email</label><br>
-                    <input type="email" name="email" size="40" style="height:35px;"/>
+                    <input type="email" id="email" name="email" size="40" style="height:35px;" required />
                     <br><br>
                     <label>Telegram Username</label><br>
-                    <input type="text" name="tele"  size="40" style="height:35px;"/>
+                    <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required />
                     <br><br>
                     <button type="submit" class="button">Create Account</button> 
                 </form>
                 <input type="button" class="LoginButton" value="Already owned an account? Login here" onclick="window.location.href='login.php'" />
             </div>
         </div>
+        <?php
+            if (isset($_GET['error'])){
+                if ($_GET['error'] == "pwdnm")
+                {?>
+                    <script>
+                        document.getElementById("pwderror").style.visibility = "visible";
+                        document.getElementById("pwderror2").style.visibility = "visible";
+                    </script>
+                <?php }
+            }
+        ?>
     </body>
 </html>
