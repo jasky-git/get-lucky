@@ -25,6 +25,7 @@
         border-right:2px solid black;
         height:420px;
         width:350px; 
+        visibility:hidden;
       }
       input {
         margin-left:10px;
