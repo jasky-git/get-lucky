@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `userid` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `tele_username` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -47,22 +46,11 @@ COMMIT;
 -- Dumping data for table `users`
 --
 
-INSERT INTO `user` (`userid`, `name`, `tele_username`, `email`, `password`) VALUES
-(1, 'peter', 'petertan', 'peter@smu.edu.sg', 'apple'),
-(2, 'tom', 'tomtan', 'tom@smu.edu.sg', 'apple'),
-(3, 'jack', 'jacktan', 'jack@smu.edu.sg', 'orange'),
-(4, 'joe', 'joetan', 'joe@smu.edu.sg', 'orange');
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `user`
-  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
+INSERT INTO `user` (`userid`, `name`, `tele_username`, `password`) VALUES
+(1, 'peter', 'peter@smu.edu.sg', 'apple'),
+(2, 'tom', 'tom@smu.edu.sg', 'apple'),
+(3, 'jack', 'jack@smu.edu.sg', 'orange'),
+(4, 'joe', 'joe@smu.edu.sg', 'orange');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
