@@ -8,20 +8,24 @@
 </head>
 <body>
     <form method="get">
-        Num of packs: <input type="number" name="" id=""> <br>
-        Date: <input type="date" name=""> <br> 
+        Num of packs: <input type="number" name="packs"> <br>
+        Date: <input type="date" name="dte"> <br> 
         Category: 
-        <select name="category" id="">
+        <select name="category">
             <option value="">romance</option>
             <option value="">formal</option>
             <option value="4bf58dd8d48988d1e4931735,4bf58dd8d48988d182941735" selected>casual</option>
         </select> <br>
         Budget: 
-        <input type="radio" name="budget" id="">$ 
-        <input type="radio" name="budget" id="">$$
-        <input type="radio" name="budget" id="">$$$
+        <input type="radio" name="budget" value='cheap'>$ 
+        <input type="radio" name="budget" value='moderate'>$$
+        <input type="radio" name="budget" value='high'>$$$
         <br>
-        Venue to start the date: <input type="text" name="" id="">
+        Venue to start the date: <input type="text" name="startVenue">
+        <br>
+        Start time of date: <input type="number" name="startTime">
+        <br>
+        End time of date: <input type="number" name="endTime">
         <br>
         <input type="submit" value="Submit"> <input type="reset" value="Reset">
     </form>
@@ -30,34 +34,94 @@
     
     <script>
         const form = document.querySelector('form');
+        const foodId = "4bf58dd8d48988d16d941735"; //food -> cafe (foursquare)
+        const arr = [];
+        
         form.addEventListener('submit', event => {
             event.preventDefault();
             
             const budget = form.budget.value;
             const category = form.category.value;
-
-            // console.log(category);
+            const startVenue = form.startVenue.value;
 
             const categories = category.split(',');
 
-            // console.log(categories);
-
-            //get the first category > randomize > get one value
-            fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${categories[0]}&near=Orchard&client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
+            // fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${value}&near=${startVenue}&client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
+            fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${categories[0]}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`)
             .then(response => response.json())
             .then(data => {
-               console.log(data); 
-            });
-
+                getData(data);
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${foodId}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+            })
+            .then(response => response.json())
+            .then(data => {
+                getData(data);
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${categories[1]}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+            })
+            .then(response => response.json())
+            .then(data => {
+                getData(data);
+                return window.location.href = './confirmation.php';
+            })
+            
         });
 
+        function getData(data){
+            let res = data.response.venues;
+            let cc;
+            let rand;
+            let state = false;
+            
+            //check if location is in SG and if not just random the number again
+            while (!state){
+                rand = Math.floor(Math.random() * Math.floor(10));
+                // console.log(rand);
+                cc = res[rand].location.cc;
+                if(cc === "SG"){
+                    state = true;
+                }
+            }
+            // console.log(res[rand]);
+            let venueId = res[rand].id;
+            let venue = res[rand].name;
+            let address = res[rand].location.address;
+            let lat = res[rand].location.lat;
+            let lng = res[rand].location.lng;
 
+            // trying to get the price, realise only food has prices but not all
+            // quota call limit hit, try again next time
+            // getDetails(venueId);
 
+            let obj = {id:venueId, venue:venue, address:address, lat:lat, lng:lng};
 
+            //do the post request here?
+            $.ajax({
+                type: 'POST',
+                url: 'processListview.php',
+                data: {"id": venueId, "venue": venue, "address": address, "lat": lat, "lng": lng},
+                success: function(msg){
+                    if(msg) {
+                        console.log(msg);
+                    }
+                }
+            });
+            
+            arr.push(obj);
+            // console.log(arr);
+        }
 
-
+        // get the venue details -> price
+        // not all food venues have prices -> might be a problem
+        // function getDetails(venueId){
+        //     fetch(`https://api.foursquare.com/v2/venues/${venueId}?client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // console.log(data);
+        //     });
+        // }
 
 
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
