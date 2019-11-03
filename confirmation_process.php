@@ -1,6 +1,6 @@
 <?php
-$token = "1049848190:AAHwK2pfWCSu38QVX4MzFSjzaNZ6Q7HiLYw";
-$chatid = "97055807";
+$token = "";
+$chatid = "";
 
 //Caller
 sendMessage($chatid, "Hello Big Big World", $token);
@@ -20,7 +20,7 @@ function sendMessage($chatID, $messaggio, $token) {
     $url = "https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $chatID;
     
     //bot.sendMessage('@something', 'Hello')
-    // $username = "jaskyong"
+    // $username = ""
     // $url = "https://api.telegram.org/bot" . $token . "/sendMessage?" . $result;
    
     $url = $url . "&text=" . urlencode($messaggio);
