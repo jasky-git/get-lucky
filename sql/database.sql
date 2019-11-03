@@ -22,6 +22,10 @@ SET time_zone = "+00:00";
 -- Database: `get-lucky-db`
 --
 
+DROP SCHEMA IF EXISTS `get-lucky-db`;
+CREATE SCHEMA `get-lucky-db`;
+USE `get-lucky-db`;
+
 -- --------------------------------------------------------
 
 --
@@ -31,10 +35,22 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `userid` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `tele_username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `user` (`userid`, `name`, `tele_username`, `password`) VALUES
+(1, 'peter', 'peter@smu.edu.sg', 'apple'),
+(2, 'tom', 'tom@smu.edu.sg', 'apple'),
+(3, 'jack', 'jack@smu.edu.sg', 'orange'),
+(4, 'joe', 'joe@smu.edu.sg', 'orange');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
