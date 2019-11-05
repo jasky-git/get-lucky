@@ -23,9 +23,10 @@
 </head>
 <body>
     <?php
-    echo '<div class="page-header">
+    echo '<div class="page-header" style="padding-left: 50px; padding-right:50px">
             <h1 id="timeline">Timeline</h1>
             </div>
+            <div style="padding-left: 50px; padding-right:50px">
             <ul class="timeline">';
         $count = 0;
         foreach($example as $k => $v) {
@@ -49,6 +50,8 @@
             </div>
             </li>';
         }
+
+        echo "</ul></div>"
 
     ?>
 
