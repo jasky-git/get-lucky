@@ -8,8 +8,10 @@
 </head>
 <body>
     <form method="get">
-        Num of packs: <input type="number" name="packs"> <br>
-        Date: <input type="date" name="dte"> <br> 
+        Number of People: <input type="number" name="packs" min=1 max=100 value=1 required> <br>
+        Date:<input type="date" name="dte" id="dte" onchange=setMinTime(this) required> <br>
+        Start Time: <input type="time" name="startTime" id="startTime" min="09:00" max="18:00" required><br> 
+        End Time: <input type="time" name="endTime" id="endTime" min="10:00" max="19:00" required><br> 
         Category: 
         <select name="category">
             <option value="">romance</option>
@@ -21,12 +23,12 @@
         <input type="radio" name="budget" value='moderate'>$$
         <input type="radio" name="budget" value='high'>$$$
         <br>
-        Venue to start the date: <input type="text" name="startVenue">
+        Venue to start the date: <input type="text" name="startVenue" required>
         <br>
-        Start time of date: <input type="number" name="startTime">
+        <!-- Start time of date: <input type="number" name="startTime">
         <br>
         End time of date: <input type="number" name="endTime">
-        <br>
+        <br> -->
         <input type="submit" value="Submit"> <input type="reset" value="Reset">
     </form>
 
@@ -36,13 +38,112 @@
         const form = document.querySelector('form');
         const foodId = "4bf58dd8d48988d16d941735"; //food -> cafe (foursquare)
         const arr = [];
-        
+
+        window.onload = function() {
+            var current_date = new Date()
+            function formatDate(date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2) 
+                    month = '0' + month;
+                if (day.length < 2) 
+                    day = '0' + day;
+
+                return [year, month, day].join('-');
+            }
+            
+            // setting the current time as the minimum to start and end on windows load up
+            current_time = current_date.toTimeString();
+            console.log(current_time.substring(0,5));
+            document.getElementById("startTime").min = current_time.substring(0,5);
+            document.getElementById("startTime").value = current_time.substring(0,5);
+
+            document.getElementById("endTime").min = current_time.substring(0,5);
+            document.getElementById("endTime").value = current_time.substring(0,5);
+
+            document.getElementById("dte").min = formatDate(current_date);
+            document.getElementById("dte").value = formatDate(current_date);
+            console.log(formatDate(current_date));
+        }
+
+        // if date selected is a future date, min start and end time goes back to original
+        function setMinTime(obj) {
+            console.log(obj.value)
+            var current_date = new Date()
+            if (new Date(obj.value) > current_date) {
+                console.log("yes");
+                document.getElementById("startTime").min = "09:00";
+                document.getElementById("endTime").min = "10:00";
+            }
+        }
+
         form.addEventListener('submit', event => {
             event.preventDefault();
             
             const budget = form.budget.value;
             const category = form.category.value;
             const startVenue = form.startVenue.value;
+
+            // get start and end time, and get activities based on times
+            const start = form.startTime.value;
+            const end = form.endTime.value;
+            console.log(start);
+            console.log(end);
+
+            let roundTime = (time, minutesToRound) => {
+
+                let [hours, minutes] = time.split(':');
+                hours = parseInt(hours);
+                minutes = parseInt(minutes);
+
+                // Convert hours and minutes to time in minutes
+                time = (hours * 60) + minutes; 
+
+                let rounded = Math.round(time / minutesToRound) * minutesToRound;
+                let rHr = ''+Math.floor(rounded / 60)
+                let rMin = ''+ rounded % 60
+
+                return rHr.padStart(2, '0')+':'+rMin.padStart(2, '0')
+            }
+
+            const startTime = roundTime(start,60);
+            const endTime = roundTime(end,60);
+            console.log(startTime);
+            console.log(endTime);
+
+            // validate start time < end time
+            if(startTime>endTime) {
+                alert("Start time cannot be more than end time!");
+            } else if(startTime == endTime) {
+                alert("Start time must be different from end time!")
+            }
+
+            // based on time, get activities
+            if(startTime < "12:00") {
+                // get actitivty for morning
+                console.log("get morning activity")
+            }
+
+            if(startTime <= "12:00" && endTime >= "13:00") {
+                console.log("have lunch")
+            }
+
+            if(startTime <= "13:00" && endTime >= "15:30" ) {
+                console.log("get afternoon activity 1")
+            }
+
+            if(startTime <= "15:30" && endTime >= "18:00") {
+                console.log("get afternoon activity 2")
+            }
+
+            if(startTime <= "18:00" && endTime >= "19:00") {
+                // have to edit to accept end timings such as 6.30... or need to round up the timing
+                console.log("get dinner")
+            }
+            // ----------- end of time ---------------
 
             const categories = category.split(',');
 
