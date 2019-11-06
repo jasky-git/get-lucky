@@ -50,15 +50,16 @@
         <ul class="timeline">
           <?php
             $dao = new HistoryDAO();
-            $result = $dao->getAll();
+            //$result = $dao->getAllByUserID($_SESSION['userid']);
+            $result = $dao->getAllByUserID();
 
             foreach($result as $history) {
+              // var_dump($history);
               echo "            
                 <li>
-                  <a target='_blank' href='https://www.totoprayogo.com/#'>New Web Design</a>
-                  <a href='#' class='float-right'>{$history->datee}</a>
+                  <a target='_blank' href=''>{$history->title}</a>
+                  <a href='#' class='float-right'>{$history->date}</a>
                   <p>Venue: {$history->venue}</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
                 </li>
               ";
             }

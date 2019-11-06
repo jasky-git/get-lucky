@@ -7,10 +7,10 @@ class HistoryDAO {
   public function addIternary($venueId,$venue,$address,$lat,$lng,$title,$date,$userId){
     $sql = "INSERT INTO history (venueId, venue, address, lat, lng, title, date, userId) VALUES (:venueId, :venue, :address, :lat, :lng, :title, :date, :userId)";
 
-    $connMgr = new ConnectionManager();      
+    $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
-    
+
     $stmt->bindParam(':venueId', $venueId, PDO::PARAM_STR);
     $stmt->bindParam(':venue', $venue, PDO::PARAM_STR);
     $stmt->bindParam(':address', $address, PDO::PARAM_STR);
@@ -55,16 +55,17 @@ class HistoryDAO {
     return $result;
   }
 
-  public function getAll(){
+  public function getAllByUserID($userid){
     //WHERE USER = :USER
     // $sql = "SELECT DISTINCT date, venue FROM history";
-    $sql = "SELECT DISTINCT date, venue FROM history";
+    // $sql = "SELECT DISTINCT title, venue, date FROM history";
+    $sql = "SELECT DISTINCT date, venue, title FROM history WHERE userId = :userid";
 
     $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
 
-    // $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
 
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $stmt->execute();
@@ -76,7 +77,7 @@ class HistoryDAO {
 
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // $result[] = new history($row['date'], $row['venue']);
-        $result[] = new history($row['date'], $row['venue']);
+        $result[] = new history($row['date'], $row['venue'], $row['title']);
     }
 
     // clean up resources

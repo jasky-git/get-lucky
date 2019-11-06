@@ -19,9 +19,12 @@ class History {
         }
     }
 
-    public function __construct2($date,$venue) {
+    public function __construct3($date, $venue, $title) {
         $this->date = $date;
         $this->venue = $venue;
+        $this->title = $title;
+        
+    }
 
     public function __construct8($venueId,$venue,$address,$lat,$lng,$title,$date,$userId){
         $this->venueId = $venueId;
