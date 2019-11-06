@@ -1,36 +1,37 @@
 <?php
 
 class History {
-    public $historyid;
-    public $venueid;
-    public $userid;
+    public $venueId;
+    public $userId;
     public $venue;
     public $title;
     public $address;
     public $lat;
     public $lng;
-    public $datee;
+    public $date;
 
     public function __construct() {
         $get_arguments = func_get_args();
         $number_of_arguments = func_num_args();
-
+        
         if (method_exists($this, $method_name = '__construct'.$number_of_arguments)) {
             call_user_func_array(array($this, $method_name), $get_arguments);
         }
     }
 
-    public function __construct2($datee,$venue) {
-        $this->datee = $datee;
+    public function __construct2($date,$venue) {
+        $this->date = $date;
         $this->venue = $venue;
-    }
 
-    public function __construct5($id,$venue,$address,$lat,$lng){
-        $this->id = $id;
+    public function __construct8($venueId,$venue,$address,$lat,$lng,$title,$date,$userId){
+        $this->venueId = $venueId;
         $this->venue = $venue;
         $this->address = $address;
         $this->lat = $lat;
         $this->lng = $lng;
+        $this->title = $title;
+        $this->date = $date;
+        $this->userId = $userId;
     }
 }
 

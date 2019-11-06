@@ -1,6 +1,6 @@
 <?php
   // include 'include/authenticate_session.php';
-  include 'include/confirmation_process_dao.php';
+  // include 'include/confirmation_process_dao.php';
 ?>
 
 <!DOCTYPE html>
