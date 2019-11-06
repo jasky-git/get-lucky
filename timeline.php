@@ -1,15 +1,20 @@
+<?php
+  include './include/authenticate_session.php';
+  include './model/confirmation_process_dao.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Confirmation</title>
+    <title>Timeline</title>
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="confirmation.css">
+    <link rel="stylesheet" type="text/css" href="style/timeline.css">
     
     <?php
         var_dump($_GET);
