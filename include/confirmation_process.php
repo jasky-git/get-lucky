@@ -1,6 +1,6 @@
 <?php
   include '../include/authenticate_session.php';
-  
+
   /*
   //EMAIL; FACING UNAUTHORISED CLIENT ISSUES FROM SMU SECURITY
   ini_set('SMTP','smtp.smu.edu');
@@ -40,7 +40,6 @@
 
   //mail($to,$subject,$message,$headers);
 
-
   $token = "1049848190:AAHwK2pfWCSu38QVX4MzFSjzaNZ6Q7HiLYw";
   $chatid = "-293965325";
 
@@ -55,6 +54,9 @@
   //Calling from CMD
   curl -X POST "https://api.telegram.org/bot1049848190:AAHwK2pfWCSu38QVX4MzFSjzaNZ6Q7HiLYw/sendMessage" -d "chat_id=-293965325&text=Testing Message from CMD"
    */
+   
+  <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+
   alert("Confirmation Successful");
   header("Location: confirmation.php");
 ?>
