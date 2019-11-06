@@ -1,6 +1,6 @@
 <?php
 
-class History {
+class history {
   // property declaration
   public $historyid;
   public $id;
