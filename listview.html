@@ -28,12 +28,9 @@
         <select name="category">
             <option value="">romance</option>
             <option value="">formal</option>
-            <option value="4bf58dd8d48988d1e4931735,4bf58dd8d48988d182941735" selected>casual</option>
+            <option value="4bf58dd8d48988d1e4931735,4bf58dd8d48988d182941735,4bf58dd8d48988d1fd941735" selected>casual</option>
         </select> <br>
-        Budget: 
-        <input type="radio" name="budget" value='cheap'>$ 
-        <input type="radio" name="budget" value='moderate'>$$
-        <input type="radio" name="budget" value='high'>$$$
+        Title of Iternary: <input type="text" name="titleIter" placeholder="Title of Iternary" required>
         <br>
         Venue to start the date: <input type="text" name="startVenue" required>
         <br>
@@ -49,7 +46,8 @@
     <script>
         const form = document.querySelector('form');
         const foodId = "4bf58dd8d48988d16d941735"; //food -> cafe (foursquare)
-        const arr = [];
+        let result = document.querySelector('.result');
+        let arr = [];
 
         /*--------- STARTUP FUNCTION ---------*/
         window.onload = function() {
@@ -96,10 +94,11 @@
         /*--------- ONSUBMIT FORM BUTTON ---------*/
         form.addEventListener('submit', event => {
             event.preventDefault();
-            
-            const budget = form.budget.value;
+
             const category = form.category.value;
             const startVenue = form.startVenue.value;
+            const dte = form.dte.value;
+            const title = form.titleIter.value;
             const categories = category.split(',');
 
             // get start and end time, and get activities based on times
@@ -129,7 +128,7 @@
             console.log(startTime);
             console.log(endTime);
 
-            getAPIData(categories,startVenue,startTime,endTime);
+            getAPIData(categories,startVenue,startTime,endTime,dte,title);
             // console.log(arr);
             // console.log(resArr);
 
@@ -145,37 +144,64 @@
 
 
         /*--------- FUNCTION CALLS ---------*/
-        function assignTime(data,startTime,endTime){
+        function assignTime(data,startTime,endTime,dte,title){
             console.log(data);
             // based on time, get activities
             if(startTime < "12:00") {
-                // get actitivty for morning
+                // get activity for morning
                 console.log("get morning activity");
-                
+                console.log('---- ' + data[0].venue);
+                result.insertAdjacentHTML('beforeend', `<p>${data[0].venue}</p>`);
+
             }
 
             if(startTime <= "12:00" && endTime >= "13:00") {
                 console.log("have lunch");
+                console.log('---- ' + data[1].venue);
+                result.insertAdjacentHTML('beforeend', `<p>${data[1].venue}</p>`);
             }
 
             if(startTime <= "13:00" && endTime >= "15:30" ) {
                 console.log("get afternoon activity 1");
-                console.log('---- ' + data[0].venue);
+                console.log('---- ' + data[2].venue);
+                result.insertAdjacentHTML('beforeend', `<p>${data[2].venue}</p>`);
             }
 
             if(startTime <= "15:30" && endTime >= "18:00") {
                 console.log("get afternoon activity 2");
-                console.log('---- ' + data[1].venue);
+                console.log('---- ' + data[3].venue);
+                result.insertAdjacentHTML('beforeend', `<p>${data[3].venue}</p>`);
             }
 
             if(startTime <= "18:00" && endTime >= "19:00") {
                 // have to edit to accept end timings such as 6.30... or need to round up the timing
                 console.log("get dinner");
-                console.log('---- ' + data[2].venue);
+                console.log('---- ' + data[4].venue);
+                result.insertAdjacentHTML('beforeend', `<p>${data[4].venue}</p>`);
             }
+
+            result.insertAdjacentHTML('beforeend', `<button type='button' class='submit-btn'>Submit</button>`)
+            // data.forEach(value => console.log(value));
+
+            const confirmBtn = document.querySelector('.submit-btn');
+            confirmBtn.addEventListener('click', event => {
+                data.forEach(value => {
+                    console.log(value);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'processListview.php',
+                        data: {"venueId": value.id, "venue": value.venue, "address": value.address, "lat": value.lat, "lng": value.lng, "title":title, "date":dte},
+                        success: function(msg){
+                            if(msg) {
+                                console.log(msg);
+                            }
+                        }
+                    });
+                })
+            })
         }
 
-        function getAPIData(categories,startVenue,startTime,endTime){
+        function getAPIData(categories,startVenue,startTime,endTime,dte,title){
             let counter = 0;
             let tempArr = null;
             fetch(`https://api.foursquare.com/v2/venues/search?limit=1&intent=checkin&radius=2500&categoryId=${categories[0]}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`)
@@ -185,87 +211,75 @@
                 tempArr = getData(data, counter);
                 // console.log(tempArr);
                 counter ++;
-                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=checkin&radius=2500&categoryId=${foodId}&ll=${tempArr[0].lat},${tempArr[0].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=15&intent=checkin&radius=2500&categoryId=${foodId}&ll=${tempArr[0].lat},${tempArr[0].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
             })
             .then(response => response.json())
             .then(data => {
                 tempArr = getData(data, counter);
                 // console.log(tempArr);
                 counter ++;
-                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=2500&categoryId=${categories[1]}&ll=${tempArr[1].lat},${tempArr[1].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=15&intent=browse&radius=2500&categoryId=${categories[1]}&ll=${tempArr[1].lat},${tempArr[1].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
             })
             .then(response => response.json())
             .then(data => {
-                // getData(data);
+                tempArr = getData(data, counter);
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=15&intent=checkin&radius=2500&categoryId=${categories[2]}&ll=${tempArr[2].lat},${tempArr[2].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+            })
+            .then(response => response.json())
+            .then(data => {
+                tempArr = getData(data, counter);
+                // console.log(tempArr);
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=15&intent=checkin&radius=2500&categoryId=${foodId}&ll=${tempArr[3].lat},${tempArr[3].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+            })
+            .then(response => response.json())
+            .then(data => {
                 return tempArr = getData(data, counter);
                 // console.log(tempArr);
-                // return window.location.href = './confirmation.php';
             })
             .then(data => {
-                console.log(data,startTime,endTime);
-                //call calculatetime function
-                assignTime(data,startTime,endTime);
+                console.log(dte);
+                console.log(title);
+                assignTime(data,startTime,endTime,dte,title);
             })
         }
     
         function getData(data, counter){
             let res = data.response.venues;
             let cc;
-            let rand;
             let state = false;
             let innerCounter = counter;
             
-            //check if location is in SG and if not just random the number again
-            if(counter > 0) {
-                while (!state){
+            while (!state){
+                if(counter > 0) {
                     innerCounter = Math.floor(Math.random() * Math.floor(res.length-1));
                     // console.log(innerCounter);
-                    cc = res[innerCounter].location.cc;
-                    if(cc === "SG"){
-                        state = true;
-                    }
                 }
-            } 
+                
+                cc = res[innerCounter].location.cc;
+
+                if(cc === 'SG'){
+                    state = true;
+                }
+            }
 
             // console.log(res[innerCounter]);
+            // let address;
             let venueId = res[innerCounter].id;
             let venue = res[innerCounter].name;
-            let address = res[innerCounter].location.address;
+            let address = 'NIL';
+            if('address' in res[innerCounter].location === true){
+                address = res[innerCounter].location.address;
+            } 
             let lat = res[innerCounter].location.lat;
             let lng = res[innerCounter].location.lng;
 
             let obj = {id:venueId, venue:venue, address:address, lat:lat, lng:lng};
-
-            //do the post request here?
-            // $.ajax({
-            //     type: 'POST',
-            //     url: 'processListview.php',
-            //     data: {"id": venueId, "venue": venue, "address": address, "lat": lat, "lng": lng},
-            //     success: function(msg){
-            //         if(msg) {
-            //             console.log(msg);
-            //         }
-            //     }
-            // });
             
             arr.push(obj);
             return arr;
             // console.log(arr);
-
-            // fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${value}&near=${startVenue}&client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
             
         }
-
-        // get the venue details -> price
-        // not all food venues have prices -> might be a problem
-        // function getDetails(venueId){
-        //     fetch(`https://api.foursquare.com/v2/venues/${venueId}?client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // console.log(data);
-        //     });
-        // }
-
 
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
