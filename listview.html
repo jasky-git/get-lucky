@@ -181,8 +181,19 @@
                 console.log("result");
             }
 
-            // add "confirm" button for user to move to confirmation page
+            // add confirm button to go to confirmation page
+            // for now this button doesn't do anything and it's not linked to any pages yet
+            var button_node = document.createElement("button");
+            button_node.type = "button";
+            button_node.value = "confirm";
+            var node = document.createTextNode("confirm");
+            button_node.appendChild(node);
             
+            var element = document.getElementById("result");
+            element.appendChild(button_node);
+            
+            console.log("button");
+
         });
 
         function getData(data){
