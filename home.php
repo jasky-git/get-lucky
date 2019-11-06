@@ -73,8 +73,9 @@
     </script>
     <title>Get Lucky</title>
   </head>
+  
   <body>
-  <nav class="navbar navbar-expand-sm bg-dark" style="background-color: black;">
+  <!-- <nav class="navbar navbar-expand-sm bg-dark" style="background-color: black;">
     <?php
       if (isset($_SESSION['userid'])){?>
         <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" style="display:inline-block; padding:10px;color:white; margin-right:20px;position: absolute; right:0; margin-top:auto; margin-bottom:auto;">Hello</label>
@@ -100,10 +101,10 @@
       <h6 style="color:grey;text-align:center;">Or Sign In Using</h6>
       <span style="margin-left:95px;"><img src="image/social.png" height="40px"></span>
 
-     
+   
 
   </div>
     
-    <a href="listview.html">List-view Page</a>
+    <a href="listview.html">List-view Page</a> -->
   </body>
 </html>
