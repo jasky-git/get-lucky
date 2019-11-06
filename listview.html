@@ -167,13 +167,19 @@
 
             // appending form values for user to double confirm
 
-            var para = document.createElement("p");
-            var node = document.createTextNode("Result");
-            para.appendChild(node);
-            
-            var element = document.getElementById("result");
-            element.appendChild(para);
-            console.log("result");
+            // assuming there is an array of activities
+
+            var activities = ["activity 1", "activity 2", "activity 3", "activity 4"]
+
+            for (var activity of activities) {
+                var para = document.createElement("p");
+                var node = document.createTextNode(activity);
+                para.appendChild(node);
+                            
+                var element = document.getElementById("result");
+                element.appendChild(para);
+                console.log("result");
+            }
 
             // add "confirm" button for user to move to confirmation page
             
