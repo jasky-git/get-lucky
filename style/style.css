@@ -1,0 +1,53 @@
+.navbar{
+  height:50px;
+  background-color:black;
+}
+
+.loginSignup:hover{
+  background-color: grey;
+}
+
+#login-form{
+  position:fixed;
+  right:10px;
+  top:48px;
+  border-bottom:2px solid black;
+  border-left:2px solid black;
+  border-right:2px solid black;
+  height:420px;
+  width:350px; 
+  visibility:hidden;
+}
+
+input {
+  margin-left:10px;
+  margin-top:10px;
+}
+
+.button {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 7px;
+  width:325px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top:20px;
+  margin-left:10px;
+}
+
+.NewAccountButton {
+  background-color: orange;
+  border: none;
+  color: black;
+  padding: 7px;
+  width:325px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top:-7px;
+  margin-bottom:15px;
+}

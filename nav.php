@@ -1,99 +1,95 @@
-<?php //header("Location: home.php");
-?>
-<html>
-  <head>
 
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.js">
+<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap/bootstrap.min.js">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700"> 
-    <link rel="stylesheet" href="Travellers/travelers/fonts/icomoon/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700"> 
+<link rel="stylesheet" href="Travellers/travelers/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="Travellers/travelers/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Travellers/travelers/css/magnific-popup.css">
-    <link rel="stylesheet" href="Travellers/travelers/css/jquery-ui.css">
-    <link rel="stylesheet" href="Travellers/travelers/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="Travellers/travelers/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="Travellers/travelers/css/bootstrap.min.css">
+<link rel="stylesheet" href="Travellers/travelers/css/magnific-popup.css">
+<link rel="stylesheet" href="Travellers/travelers/css/jquery-ui.css">
+<link rel="stylesheet" href="Travellers/travelers/css/owl.carousel.min.css">
+<link rel="stylesheet" href="Travellers/travelers/css/owl.theme.default.min.css">
 
-    <link rel="stylesheet" href="Travellers/travelers/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="Travellers/travelers/css/bootstrap-datepicker.css">
 
-    <link rel="stylesheet" href="Travellers/travelers/fonts/flaticon/font/flaticon.css">
+<link rel="stylesheet" href="Travellers/travelers/fonts/flaticon/font/flaticon.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
 
 
-    <link rel="stylesheet" href="Travellers/travelers/css/aos.css">
+<link rel="stylesheet" href="Travellers/travelers/css/aos.css">
 
-    <link rel="stylesheet" href="Travellers/travelers/css/style.css">
+<link rel="stylesheet" href="Travellers/travelers/css/style.css">
 
-    <style>
-      .navbar{
-        height:50px;
-        background-color:black;
-        
-      }
-      .loginSignup:hover{
-        background-color: grey;
-      }
+<style>
+  .navbar{
+    height:50px;
+    background-color:black;
+    
+  }
+  .loginSignup:hover{
+    background-color: grey;
+  }
 
-      #login-form{
-        position:fixed;
-        right:10px;
-        top:48px;
-        /* border-top :1px solid black; */
-        border-bottom:1px solid black;
-        border-left:1px solid black;
-        border-right:1px solid black;
-        height:420px;
-        width:320px; 
-        visibility:hidden;
-      }
-      input {
-        margin-left:10px;
-        margin-top:10px;
-        font-size: 14px;
-      }
+  #login-form{
+    position:fixed;
+    right:10px;
+    top:48px;
+    /* border-top :1px solid black; */
+    border-bottom:1px solid black;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    height:420px;
+    width:320px; 
+    visibility:hidden;
+  }
+  input {
+    margin-left:10px;
+    margin-top:10px;
+    font-size: 14px;
+  }
 
-      .button {
-        background-color: black;
-        border: none;
-        color: white;
-        padding: 7px;
-        width:290px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 12px;
-        margin-top:20px;
-        margin-left:0px;
-      }
+  .button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 7px;
+    width:290px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-top:20px;
+    margin-left:0px;
+  }
 
-      .NewAccountButton {
-        background-color: orange;
-        border: none;
-        color: black;
-        padding: 7px;
-        width:290px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 12px;
-        margin-top:-7px;
-        margin-bottom:15px;
-        margin-left:0px;
-      }
-    </style>
+  .NewAccountButton {
+    background-color: orange;
+    border: none;
+    color: black;
+    padding: 7px;
+    width:290px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-top:-7px;
+    margin-bottom:15px;
+    margin-left:0px;
+  }
+</style>
 
-    <script>
-     
-     function mouseOver() {
-       document.getElementById("login-form").style.visibility = "visible";
-     }
+<script>
+ 
+ function mouseOver() {
+   document.getElementById("login-form").style.visibility = "visible";
+ }
 
-     function mouseOut() {
-       document.getElementById("login-form").style.visibility = "hidden";
-     }
-   </script>
+ function mouseOut() {
+   document.getElementById("login-form").style.visibility = "hidden";
+ }
+</script>
 
 
 <body>
@@ -195,5 +191,3 @@
   </div>
   
 </header>
-</body>
-</html>

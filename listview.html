@@ -5,7 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
     <title>Timeline</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700"> 
+    <link rel="stylesheet" href="Travellers/travelers/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="Travellers/travelers/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Travellers/travelers/css/magnific-popup.css">
+    <link rel="stylesheet" href="Travellers/travelers/css/jquery-ui.css">
+    <link rel="stylesheet" href="Travellers/travelers/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="Travellers/travelers/css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="Travellers/travelers/css/bootstrap-datepicker.css">
+
+    <link rel="stylesheet" href="Travellers/travelers/fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
+
+
+    <link rel="stylesheet" href="Travellers/travelers/css/aos.css">
+
+    <link rel="stylesheet" href="Travellers/travelers/css/style.css">
 </head>
 <body>
 
@@ -18,28 +39,97 @@
         });
     </script>
     <!--end of Navigation bar-->
+    <div class="site-wrap">
+        <div class="site-blocks-cover inner-page-cover" style="background-image: url(images/hero_bg_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-md-8" data-aos="fade-up" data-aos-delay="400">
+                        <h1 class="text-white font-weight-light">Create Itinerary</h1>
+                        <div><a href="index.html">Home</a> <span class="mx-2 text-white">&bullet;</span> <span class="text-white">Booking</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 mb-5">
+                        <form method="get" class="p-5 bg-white">
+    
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-black" for="dte">Date</label>
+                                    <input type="date" name="dte" id="dte" onchange=setMinTime(this) class= "form-control px-2" required>
+                                </div>
+                            </div>
+    
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-black" for="startTime">Start Time</label>
+                                    <input type="time" name="startTime" id="startTime" min="09:00" max="19:00" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-black" for="endTime">End Time</label>
+                                    <input type="time" name="endTime" id="endTime" min="10:00" max="20:00" class="form-control"required>
+                                </div>
+                            </div>
+    
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label class="text-black" for="packs">Number of People</label>
+                                    <input type="number" id="packs" class="form-control" name="packs" min=1 max=100 value=1 placeholder="2" required>
+                                </div>
+                            </div>
+    
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label class="text-black" for="category">Type of Date</label>
+                                    <select name="category" id="category" class="form-control">
+                                        <option value="4bf58dd8d48988d17f941735, 4bf58dd8d48988d165941735, 4bf58dd8d48988d181941735">Romantic</option>
+                                        <option value="4bf58dd8d48988d181941735, 4bf58dd8d48988d137941735, 4bf58dd8d48988d1e5931735">Formal</option>
+                                        <option value="4bf58dd8d48988d1e4931735,4bf58dd8d48988d182941735,4bf58dd8d48988d1fd941735" selected>Casual</option>
+                                    </select>
+                                </div>
+                            </div>
+    
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-black" for="titleIter">Title of Iternary</label><br>
+                                    <input type="text" name="titleIter" required class="form-control" placeholder="Title">
+                                </div>
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-black" for="startVenue">Starting Venue</label>
+                                    <input type="text" name="startVenue" required class="form-control" placeholder="Bugis">
+                                </div>
+                            </div>
+    
+                            <br>
+    
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" value="Submit" class="btn btn-primary py-2 px-4 text-white">
+                                    <input type="reset" value="Reset" class="btn btn-primary py-2 px-4 text-white">
+                                </div>
+                            </div>
 
-    <form method="get">
-        Number of People: <input type="number" name="packs" min=1 max=100 value=1 required> <br>
-        Date:<input type="date" name="dte" id="dte" onchange=setMinTime(this) required> <br>
-        Start Time: <input type="time" name="startTime" id="startTime" min="09:00" max="18:00" required><br> 
-        End Time: <input type="time" name="endTime" id="endTime" min="10:00" max="19:00" required><br> 
-        Category: 
-        <select name="category">
-            <option value="">romance</option>
-            <option value="">formal</option>
-            <option value="4bf58dd8d48988d1e4931735,4bf58dd8d48988d182941735,4bf58dd8d48988d1fd941735" selected>casual</option>
-        </select> <br>
-        Title of Iternary: <input type="text" name="titleIter" placeholder="Title of Iternary" required>
-        <br>
-        Venue to start the date: <input type="text" name="startVenue" required>
-        <br>
-        <!-- Start time of date: <input type="number" name="startTime">
-        <br>
-        End time of date: <input type="number" name="endTime">
-        <br> -->
-        <input type="submit" value="Submit"> <input type="reset" value="Reset">
-    </form>
+                            <br>
+
+                        </form>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <div class="p-4 mb-3 bg-white">
+                            <img src="images/hero_bg_1.jpg" alt="Image" class="img-fluid mb-4 rounded">
+                            <h3 class="h5 text-black mb-3">More Info</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur? Fugiat quaerat eos qui, libero neque sed nulla.</p>
+                            <p><a href="#" class="btn btn-primary px-4 py-2 text-white">Learn More</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="result" id="result"></div>
     
@@ -146,11 +236,14 @@
         /*--------- FUNCTION CALLS ---------*/
         function assignTime(data,startTime,endTime,dte,title){
             console.log(data);
+            let timeArr = [];
+
             // based on time, get activities
             if(startTime < "12:00") {
                 // get activity for morning
                 console.log("get morning activity");
                 console.log('---- ' + data[0].venue);
+                timeArr.push(data[0]);
                 result.insertAdjacentHTML('beforeend', `<p>${data[0].venue}</p>`);
 
             }
@@ -158,18 +251,21 @@
             if(startTime <= "12:00" && endTime >= "13:00") {
                 console.log("have lunch");
                 console.log('---- ' + data[1].venue);
+                timeArr.push(data[1]);
                 result.insertAdjacentHTML('beforeend', `<p>${data[1].venue}</p>`);
             }
 
             if(startTime <= "13:00" && endTime >= "15:30" ) {
                 console.log("get afternoon activity 1");
                 console.log('---- ' + data[2].venue);
+                timeArr.push(data[2]);
                 result.insertAdjacentHTML('beforeend', `<p>${data[2].venue}</p>`);
             }
 
             if(startTime <= "15:30" && endTime >= "18:00") {
                 console.log("get afternoon activity 2");
                 console.log('---- ' + data[3].venue);
+                timeArr.push(data[3]);
                 result.insertAdjacentHTML('beforeend', `<p>${data[3].venue}</p>`);
             }
 
@@ -177,6 +273,7 @@
                 // have to edit to accept end timings such as 6.30... or need to round up the timing
                 console.log("get dinner");
                 console.log('---- ' + data[4].venue);
+                timeArr.push(data[4]);
                 result.insertAdjacentHTML('beforeend', `<p>${data[4].venue}</p>`);
             }
 
@@ -185,7 +282,7 @@
 
             const confirmBtn = document.querySelector('.submit-btn');
             confirmBtn.addEventListener('click', event => {
-                data.forEach(value => {
+                timeArr.forEach(value => {
                     console.log(value);
                     $.ajax({
                         type: 'POST',
@@ -254,7 +351,7 @@
                     innerCounter = Math.floor(Math.random() * Math.floor(res.length-1));
                     // console.log(innerCounter);
                 }
-                
+                console.log(res[innerCounter]); 
                 cc = res[innerCounter].location.cc;
 
                 if(cc === 'SG'){
@@ -283,5 +380,16 @@
 
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="Travellers/travelers/js/jquery-3.4.1.min.js"></script>
+    <script src="Travellers/travelers/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="Travellers/travelers/js/jquery-ui.js"></script>
+    <script src="Travellers/travelers/js/popper.min.js"></script>
+    <script src="Travellers/travelers/js/bootstrap.min.js"></script>
+    <script src="Travellers/travelers/js/owl.carousel.min.js"></script>
+    <script src="Travellers/travelers/js/jquery.stellar.min.js"></script>
+    <script src="Travellers/travelers/js/jquery.countdown.min.js"></script>
+    <script src="Travellers/travelers/js/jquery.magnific-popup.min.js"></script>
+    <script src="Travellers/travelers/js/bootstrap-datepicker.min.js"></script>
+    <script src="Travellers/travelers/js/aos.js"></script>
 </body>
 </html>
