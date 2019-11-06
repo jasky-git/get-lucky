@@ -1,5 +1,5 @@
 <?php
-  include './include/authenticate_session.php';
+  include '../include/authenticate_session.php';
   
   /*
   //EMAIL; FACING UNAUTHORISED CLIENT ISSUES FROM SMU SECURITY
@@ -34,9 +34,9 @@
 
   */
 
-  $firstname = "Peter";
+  $firstname = "Yeow Leong";
   $lastname = "Pan";
-  $ticketID = 988135;
+  $cfmID = 988135;
 
   //mail($to,$subject,$message,$headers);
 
@@ -46,7 +46,7 @@
 
   $data = [
         'chat_id' => '-293965325',
-        'text' => 'Hi, '. $firstname .' from Get Lucky'
+        'text' => 'Hi, '. $firstname .'. Your Confirmation id is '.$cfmID.' from Get Lucky'
     ];
 
   $response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?" . http_build_query($data) );
