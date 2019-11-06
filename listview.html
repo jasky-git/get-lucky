@@ -39,6 +39,7 @@
         const foodId = "4bf58dd8d48988d16d941735"; //food -> cafe (foursquare)
         const arr = [];
 
+        /*--------- STARTUP FUNCTION ---------*/
         window.onload = function() {
             var current_date = new Date()
             function formatDate(date) {
@@ -80,12 +81,14 @@
             }
         }
 
+        /*--------- ONSUBMIT FORM BUTTON ---------*/
         form.addEventListener('submit', event => {
             event.preventDefault();
             
             const budget = form.budget.value;
             const category = form.category.value;
             const startVenue = form.startVenue.value;
+            const categories = category.split(',');
 
             // get start and end time, and get activities based on times
             const start = form.startTime.value;
@@ -114,6 +117,10 @@
             console.log(startTime);
             console.log(endTime);
 
+            getAPIData(categories,startVenue,startTime,endTime);
+            // console.log(arr);
+            // console.log(resArr);
+
             // validate start time < end time
             if(startTime>endTime) {
                 alert("Start time cannot be more than end time!");
@@ -121,94 +128,120 @@
                 alert("Start time must be different from end time!")
             }
 
+            // ----------- end of time ---------------
+        });
+
+
+        /*--------- FUNCTION CALLS ---------*/
+        function assignTime(data,startTime,endTime){
+            console.log(data);
             // based on time, get activities
             if(startTime < "12:00") {
                 // get actitivty for morning
-                console.log("get morning activity")
+                console.log("get morning activity");
+                
             }
 
             if(startTime <= "12:00" && endTime >= "13:00") {
-                console.log("have lunch")
+                console.log("have lunch");
             }
 
             if(startTime <= "13:00" && endTime >= "15:30" ) {
-                console.log("get afternoon activity 1")
+                console.log("get afternoon activity 1");
+                console.log('---- ' + data[0].venue);
             }
 
             if(startTime <= "15:30" && endTime >= "18:00") {
-                console.log("get afternoon activity 2")
+                console.log("get afternoon activity 2");
+                console.log('---- ' + data[1].venue);
             }
 
             if(startTime <= "18:00" && endTime >= "19:00") {
                 // have to edit to accept end timings such as 6.30... or need to round up the timing
-                console.log("get dinner")
+                console.log("get dinner");
+                console.log('---- ' + data[2].venue);
             }
-            // ----------- end of time ---------------
+        }
 
-            const categories = category.split(',');
-
-            // fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${value}&near=${startVenue}&client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
-            fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${categories[0]}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`)
+        function getAPIData(categories,startVenue,startTime,endTime){
+            let counter = 0;
+            let tempArr = null;
+            fetch(`https://api.foursquare.com/v2/venues/search?limit=1&intent=checkin&radius=2500&categoryId=${categories[0]}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`)
             .then(response => response.json())
             .then(data => {
-                getData(data);
-                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${foodId}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+                // console.log(data);
+                tempArr = getData(data, counter);
+                // console.log(tempArr);
+                counter ++;
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=checkin&radius=2500&categoryId=${foodId}&ll=${tempArr[0].lat},${tempArr[0].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
             })
             .then(response => response.json())
             .then(data => {
-                getData(data);
-                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${categories[1]}&near=${startVenue}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
+                tempArr = getData(data, counter);
+                // console.log(tempArr);
+                counter ++;
+                return fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=2500&categoryId=${categories[1]}&ll=${tempArr[1].lat},${tempArr[1].lng}&client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030`);
             })
             .then(response => response.json())
             .then(data => {
-                getData(data);
-                return window.location.href = './confirmation.php';
+                // getData(data);
+                return tempArr = getData(data, counter);
+                // console.log(tempArr);
+                // return window.location.href = './confirmation.php';
             })
-            
-        });
-
-        function getData(data){
+            .then(data => {
+                console.log(data,startTime,endTime);
+                //call calculatetime function
+                assignTime(data,startTime,endTime);
+            })
+        }
+    
+        function getData(data, counter){
             let res = data.response.venues;
             let cc;
             let rand;
             let state = false;
+            let innerCounter = counter;
             
             //check if location is in SG and if not just random the number again
-            while (!state){
-                rand = Math.floor(Math.random() * Math.floor(10));
-                // console.log(rand);
-                cc = res[rand].location.cc;
-                if(cc === "SG"){
-                    state = true;
+            if(counter > 0) {
+                while (!state){
+                    innerCounter = Math.floor(Math.random() * Math.floor(res.length-1));
+                    // console.log(innerCounter);
+                    cc = res[innerCounter].location.cc;
+                    if(cc === "SG"){
+                        state = true;
+                    }
                 }
-            }
-            // console.log(res[rand]);
-            let venueId = res[rand].id;
-            let venue = res[rand].name;
-            let address = res[rand].location.address;
-            let lat = res[rand].location.lat;
-            let lng = res[rand].location.lng;
+            } 
 
-            // trying to get the price, realise only food has prices but not all
-            // quota call limit hit, try again next time
-            // getDetails(venueId);
+            // console.log(res[innerCounter]);
+            let venueId = res[innerCounter].id;
+            let venue = res[innerCounter].name;
+            let address = res[innerCounter].location.address;
+            let lat = res[innerCounter].location.lat;
+            let lng = res[innerCounter].location.lng;
 
             let obj = {id:venueId, venue:venue, address:address, lat:lat, lng:lng};
 
             //do the post request here?
-            $.ajax({
-                type: 'POST',
-                url: 'processListview.php',
-                data: {"id": venueId, "venue": venue, "address": address, "lat": lat, "lng": lng},
-                success: function(msg){
-                    if(msg) {
-                        console.log(msg);
-                    }
-                }
-            });
+            // $.ajax({
+            //     type: 'POST',
+            //     url: 'processListview.php',
+            //     data: {"id": venueId, "venue": venue, "address": address, "lat": lat, "lng": lng},
+            //     success: function(msg){
+            //         if(msg) {
+            //             console.log(msg);
+            //         }
+            //     }
+            // });
             
             arr.push(obj);
+            return arr;
             // console.log(arr);
+
+            // fetch(`https://api.foursquare.com/v2/venues/search?limit=10&intent=browse&radius=20000&categoryId=${value}&near=${startVenue}&client_id=PZI4I3GHW3KXKVK2X2YX1OVMVQRIXZULZMR2EF0D3RCBNRKO&client_secret=W0XUFTFI5ZPWMB2C4SZMMLYWZTUKCDWYRE0TC02ALQZ3U1HD&v=20191030`)
+            
         }
 
         // get the venue details -> price
