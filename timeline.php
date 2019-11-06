@@ -1,6 +1,6 @@
 <?php
-  include './include/authenticate_session.php';
-  include './model/confirmation_process_dao.php';
+  // include 'include/authenticate_session.php';
+  include 'include/confirmation_process_dao.php';
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +28,11 @@
 </head>
 <body>
     <?php
+    $dao = new confirmation_process_dao();
+    $result = $dao->getIternary();
+    
+    var_dump($result);
+    
     echo '<div class="page-header" style="padding-left: 50px; padding-right:50px">
             <h1 id="timeline">Timeline</h1>
             </div>

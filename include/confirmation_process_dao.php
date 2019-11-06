@@ -1,11 +1,11 @@
 <?php
 
-require_once '../connection/ConnectionManager.php';
-require_once 'History.php';
+require_once 'ConnectionManager.php';
+include('history.php');
 
-class Confirmation_Process_Dao {
-    public function getIternary($id,$venue,$address,$lat,$lng){
-        $sql = "SELECT venu,address FROM history";
+class confirmation_process_dao {
+    public function getIternary(){
+        $sql = "SELECT venue,address FROM history";
 
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
@@ -15,6 +15,7 @@ class Confirmation_Process_Dao {
 
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
+        
 
         $result = array();
         
@@ -22,7 +23,7 @@ class Confirmation_Process_Dao {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
         // while($row = $stmt->fetch()) {
-            // $result[] = new History($row['venue'], $row['address']);
+            // $result[] = new history($row['venue'], $row['address']);
         // }
 
         // clean up resources
