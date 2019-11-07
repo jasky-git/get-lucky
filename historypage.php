@@ -3,9 +3,17 @@
   // include("include/authenticate_session.php");
 ?>
 <html>
+  
+  
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style/scroller.css">
+  <script type="text/javascript" src="javascript/scroller.js"></script>
 
   <head>
     <style>
@@ -39,6 +47,7 @@
           height: 20px;
           z-index: 400;
       }
+
     </style>
     <?php include 'nav.php' ?>
   </head>

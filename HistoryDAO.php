@@ -27,15 +27,20 @@ class HistoryDAO {
 
     return $isAddOK;
   }
-
+  
+  //parameter: date and userid
   public function getTimeLine(){
-    $sql = "SELECT venue,address,lat,lng FROM history";
+    $sql = "SELECT venueId, venue, address, lat, lng, title FROM history WHERE userId = :userid AND title = :title";
+    // $sql = "SELECT venueId, venue, address,lat,lng FROM history";
 
     $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
 
-    // $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $userid = '1';
+    $title = 'hello';
+    $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
 
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $stmt->execute();
@@ -54,8 +59,9 @@ class HistoryDAO {
 
     return $result;
   }
-
-  public function getAllByUserID($userid){
+  
+  //to include this in getAllByUserID($userid)
+  public function getAllByUserID(){
     //WHERE USER = :USER
     // $sql = "SELECT DISTINCT date, venue FROM history";
     // $sql = "SELECT DISTINCT title, venue, date FROM history";
@@ -64,7 +70,8 @@ class HistoryDAO {
     $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
-
+    
+    $userid = '1';
     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
 
     $stmt->setFetchMode(PDO::FETCH_ASSOC);

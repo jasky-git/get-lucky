@@ -14,15 +14,15 @@ if(isset($_POST["mode"])) {
 }
 
 
-if (isset($_POST["lat1"]) &&  $_POST["lat1"]!="" && isset($_POST["lng1"]) &&  $_POST["lng1"]!="" && isset($_POST["lat2"]) &&  $_POST["lat2"]!="" && isset($_POST["lng2"]) &&  $_POST["lng2"]!="") {
+if (isset($_SESSION["lat1"]) &&  $_SESSION["lat1"]!="" && isset($_SESSION["lng1"]) &&  $_SESSION["lng1"]!="" && isset($_SESSION["lat2"]) &&  $_SESSION["lat2"]!="" && isset($_SESSION["lng2"]) &&  $_SESSION["lng2"]!="") {
 
     $baseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&";
 
     //If use Latitude and Longtitude
-    $lat1 = $_POST["lat1"];
-    $lng1 = $_POST["lng1"];
-    $lat2 = $_POST["lat2"];
-    $lng2 = $_POST["lng2"];
+    $lat1 = $_SESSION["lat1"];
+    $lng1 = $_SESSION["lng1"];
+    $lat2 = $_SESSION["lat2"];
+    $lng2 = $_SESSION["lng2"];
 
     // $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins= ". $lat1 ."," . $lng1 . "&destinations=" . $lat2 . "," . lng ."&key=" . $myapikey;
     $url = $baseUrl . "origins=" . urlencode($lat1) . "," . urlencode($lng1) . "&destinations=" . urlencode($lat2) . "," . urlencode($lng2) . "&mode=" . urlencode($mode) . "&key=" . $myapikey;
@@ -76,34 +76,3 @@ function getDistance_Duration($phpObj, $origin, $destination) {
     return $result;
 }
 ?>
-
-<!DOCTYPE html>
-
-<body>
-
-    <form>
-        <div>
-          <label for="origin">Origin address</label>
-          <input type="text" id="origin" name="origin" placeholder="80 Stamford Rd, Singapore 178902">
-        </div>
-        <div>
-          <label for="destination">Destination address</label>
-          <input type="text" id="destination" name="destination" placeholder="3 Temasek Blvd, Singapore 038983">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-
-    </form>
-
-    <!-- Later, we can use Vue or JavaScript to turn on/off the display grid -->
-    <?php if($haveData) { ?>
-            <div id="data">
-                <p><?php echo $data ?></p>
-            </div>
-
-        <?php } else {  ?>
-            <div id="data"><?php echo $data ?></div>
-        <?php } ?>
-
-</body>
-</html>
