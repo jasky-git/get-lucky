@@ -133,7 +133,7 @@
                 <li><a href="#">Events</a></li>
               </ul>
             </li>
-            
+            <li><a href="about.html">Blogs</a></li>
             <li><a href="contact.html">Contact</a></li>
             <!-- <li><a href="booking.html">Book Online</a></li> -->
           </ul>
