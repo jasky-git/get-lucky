@@ -19,7 +19,7 @@
             if (!empty($user)) {
                 if (strlen($userid) == strlen($user->userid) && $userid === $user->userid && $user->authenticate($password)) {
                     $_SESSION['userid'] = $userid;
-                    header("Location: home.php");
+                    header("Location: home.html");
                     exit();
                 }
             }

@@ -108,8 +108,8 @@
     
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <input type="submit" value="Submit" class="btn btn-primary py-2 px-4 text-white">
-                                    <input type="reset" value="Reset" class="btn btn-primary py-2 px-4 text-white">
+                                    <input type="submit" value="Submit" class="btn btn-block btn-primary py-2 px-4 text-white">
+                                    <!-- <input type="reset" value="Reset" class="btn btn-primary py-2 px-4 text-white"> -->
                                 </div>
                             </div>
 
@@ -128,16 +128,45 @@
                     </div>
                 </div>
             </div>
+
+            <!-- over here -->
+            <div class="container">
+                <div class="row custom-one">
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <div class="result px-3 pt-4" id="result"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="btn-result pl-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
+
+        
     </div>
 
-    <div class="result" id="result"></div>
+    
     
     <script>
         const form = document.querySelector('form');
         const foodId = "4bf58dd8d48988d16d941735"; //food -> cafe (foursquare)
         let result = document.querySelector('.result');
+        let btnResult = document.querySelector('.btn-result');
+        let category = '';
+        let startVenue = '';
+        let startTime = ''
+        let endTime = ''
+        let dte = '';
+        let title = '';
+        let categories = '';
         let arr = [];
+        let timeArr = '';
+        // categories,startVenue,startTime,endTime,dte,title
 
         /*--------- STARTUP FUNCTION ---------*/
         window.onload = function() {
@@ -185,11 +214,11 @@
         form.addEventListener('submit', event => {
             event.preventDefault();
 
-            const category = form.category.value;
-            const startVenue = form.startVenue.value;
-            const dte = form.dte.value;
-            const title = form.titleIter.value;
-            const categories = category.split(',');
+            category = form.category.value;
+            startVenue = form.startVenue.value;
+            dte = form.dte.value;
+            title = form.titleIter.value;
+            categories = category.split(',');
 
             // get start and end time, and get activities based on times
             const start = form.startTime.value;
@@ -213,14 +242,12 @@
                 return rHr.padStart(2, '0')+':'+rMin.padStart(2, '0')
             }
 
-            const startTime = roundTime(start,60);
-            const endTime = roundTime(end,60);
+            startTime = roundTime(start,60);
+            endTime = roundTime(end,60);
             console.log(startTime);
             console.log(endTime);
 
             getAPIData(categories,startVenue,startTime,endTime,dte,title);
-            // console.log(arr);
-            // console.log(resArr);
 
             // validate start time < end time
             if(startTime>endTime) {
@@ -234,9 +261,12 @@
 
 
         /*--------- FUNCTION CALLS ---------*/
-        function assignTime(data,startTime,endTime,dte,title){
+        function assignTime(data,startTime,endTime,dte,title,categories,startVenue){
             console.log(data);
-            let timeArr = [];
+            timeArr = [];
+            document.querySelector('.custom-one').classList.add('bg-white');
+            result.insertAdjacentHTML('beforeend', `<h2 class='mb-3'>Results</h2>`);
+            let counterTmp = 1;
 
             // based on time, get activities
             if(startTime < "12:00") {
@@ -244,29 +274,32 @@
                 console.log("get morning activity");
                 console.log('---- ' + data[0].venue);
                 timeArr.push(data[0]);
-                result.insertAdjacentHTML('beforeend', `<p>${data[0].venue}</p>`);
-
+                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[0].venue}</h5>`);
+                counterTmp ++;
             }
 
             if(startTime <= "12:00" && endTime >= "13:00") {
                 console.log("have lunch");
                 console.log('---- ' + data[1].venue);
                 timeArr.push(data[1]);
-                result.insertAdjacentHTML('beforeend', `<p>${data[1].venue}</p>`);
+                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[1].venue}</h5>`);
+                counterTmp ++;
             }
 
             if(startTime <= "13:00" && endTime >= "15:30" ) {
                 console.log("get afternoon activity 1");
                 console.log('---- ' + data[2].venue);
                 timeArr.push(data[2]);
-                result.insertAdjacentHTML('beforeend', `<p>${data[2].venue}</p>`);
+                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[2].venue}</h5>`);
+                counterTmp ++;
             }
 
             if(startTime <= "15:30" && endTime >= "18:00") {
                 console.log("get afternoon activity 2");
                 console.log('---- ' + data[3].venue);
                 timeArr.push(data[3]);
-                result.insertAdjacentHTML('beforeend', `<p>${data[3].venue}</p>`);
+                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[3].venue}</h5>`);
+                counterTmp ++;
             }
 
             if(startTime <= "18:00" && endTime >= "19:00") {
@@ -274,28 +307,48 @@
                 console.log("get dinner");
                 console.log('---- ' + data[4].venue);
                 timeArr.push(data[4]);
-                result.insertAdjacentHTML('beforeend', `<p>${data[4].venue}</p>`);
+                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[4].venue}</h5>`);
+                counterTmp ++;
             }
+            
+            if(btnResult.innerHTML === ''){
+                createButtons();
+            }
+        }
 
-            result.insertAdjacentHTML('beforeend', `<button type='button' class='submit-btn'>Submit</button>`)
-            // data.forEach(value => console.log(value));
+        function clickRetry(){
+            arr = [];
+            result.innerHTML = '';
+            // document.querySelector('.custom-one').classList.remove('bg-white');
+            getAPIData(categories,startVenue,startTime,endTime,dte,title);
+        }
 
-            const confirmBtn = document.querySelector('.submit-btn');
-            confirmBtn.addEventListener('click', event => {
-                timeArr.forEach(value => {
-                    console.log(value);
-                    $.ajax({
-                        type: 'POST',
-                        url: 'processListview.php',
-                        data: {"venueId": value.id, "venue": value.venue, "address": value.address, "lat": value.lat, "lng": value.lng, "title":title, "date":dte},
-                        success: function(msg){
-                            if(msg) {
-                                console.log(msg);
-                            }
+        function clickSubmit(timeArr){
+            timeArr.forEach(value => {
+                console.log(value);
+                $.ajax({
+                    type: 'POST',
+                    url: 'processListView.php',
+                    data: {"venueId": value.id, "venue": value.venue, "address": value.address, "lat": value.lat, "lng": value.lng, "title":title, "date":dte},
+                    success: function(msg){
+                        if(msg) {
+                            console.log(msg);
                         }
-                    });
-                })
-            })
+                    }
+                });
+            });
+
+            //go to next page, for now goes to home page
+            window.location.href = './home.html';
+        }
+
+
+        function createButtons(){
+            //creation of submit and retry buttons
+            btnResult.insertAdjacentHTML('beforeend', `
+                                        <button type='button' class='submit-btn btn btn-success py-2 px-4 text-white' onclick='clickSubmit(timeArr)'>Submit</button>
+                                        <button type='button' class='retry-btn btn btn-danger py-2 px-4 text-white' onclick='clickRetry()'>Retry</button>`
+            );
         }
 
         function getAPIData(categories,startVenue,startTime,endTime,dte,title){
@@ -336,7 +389,7 @@
             .then(data => {
                 console.log(dte);
                 console.log(title);
-                assignTime(data,startTime,endTime,dte,title);
+                assignTime(data,startTime,endTime,dte,title,categories,startVenue);
             })
         }
     
