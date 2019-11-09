@@ -118,7 +118,7 @@
 
           <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
             <li class="active">
-              <a href="home.htm">Home</a>
+              <a href="home.html">Home</a>
             </li>
 
             <li><a href="about.html">About</a></li>
@@ -134,7 +134,7 @@
               </ul>
             </li>
             <li><a href="about.html">Blogs</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="listview.html">Create a Plan</a></li>
             <!-- <li><a href="booking.html">Book Online</a></li> -->
           </ul>
         </nav>
