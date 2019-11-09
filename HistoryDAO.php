@@ -27,10 +27,10 @@ class HistoryDAO {
 
     return $isAddOK;
   }
-  
+
   //parameter: date and userid
   public function getTimeLine(){
-    $sql = "SELECT venueId, venue, address, lat, lng, title FROM history WHERE userId = :userid AND title = :title";
+    $sql = "SELECT venueId, venue, address, lat, lng FROM history WHERE userId = :userid AND title = :title";
     // $sql = "SELECT venueId, venue, address,lat,lng FROM history";
 
     $connMgr = new ConnectionManager();
@@ -48,18 +48,19 @@ class HistoryDAO {
     $result = array();
 
     //PDOStatement::fetch styles
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    // $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // while($row = $stmt->fetch()) {
-        // $result[] = new history($row['venue'], $row['address']);
-    // }
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // $result[] = new history($row['date'], $row['venue']);
+        $result[] = new history($row['venueId'], $row['venue'], $row['address'], $row['lat'], $row['lng']);
+    }
 
     // clean up resources
     //$connMgr->close($conn,$stmt);
 
     return $result;
   }
-  
+
   //to include this in getAllByUserID($userid)
   public function getAllByUserID(){
     //WHERE USER = :USER
@@ -70,7 +71,7 @@ class HistoryDAO {
     $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
-    
+
     $userid = '1';
     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
 

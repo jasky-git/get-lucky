@@ -40,11 +40,11 @@
 
   //mail($to,$subject,$message,$headers);
 
-  $token = "1049848190:AAHwK2pfWCSu38QVX4MzFSjzaNZ6Q7HiLYw";
-  $chatid = "-293965325";
+  $token = "";
+  $chatid = "";
 
   $data = [
-        'chat_id' => '-293965325',
+        'chat_id' => '',
         'text' => 'Hi, '. $firstname .'. Your Confirmation id is '.$cfmID.' from Get Lucky'
     ];
 

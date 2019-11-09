@@ -1,6 +1,8 @@
 <?php
+  error_reporting(0);
   // include 'include/authenticate_session.php';
   include 'HistoryDAO.php';
+  include 'include/calculate_process.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +28,7 @@
 </head>
 <body>
     <!-- Then put toasts within -->
+    <!--
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
         <img src="..." class="rounded mr-2" alt="...">
@@ -40,145 +43,95 @@
       </div>
     </div>
   </div>
+  -->
 
     <?php
     $dao = new HistoryDAO();
     $result = $dao->getTimeLine();
     
-    
-    
-    var_dump($result);
+    // var_dump($result);
     
     echo '<div class="page-header" style="padding-left: 50px; padding-right:50px">
             <h1 id="timeline">Timeline</h1>
             </div>
             <div style="padding-left: 50px; padding-right:50px">
             <ul class="timeline">';
-        $count = 0;
-        // foreach($result as $k => $v) {
-        foreach($result as $history) {
-          $count ++;
-          // echo "$k => $v";
-          if($count%2 > 0) {
-              echo '<li>';
-          } else {
-              echo '<li class="timeline-inverted">';
-          }
-          echo '
-              <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-              <div class="timeline-panel">
-                  <div class="timeline-heading">
-                  <h4 class="timeline-title">{$history->venue}</h4>
-                  <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>Time</small></p>
-                  </div>
-                  <div class="timeline-body">
-                  <p>'.$v.'</p>
-                  </div>
-              </div>
-              </li>';
-        }
-
-        echo "</ul></div>"
-
+    
+    $count = 0;
+    $counter = -1;
+    $temp = -1;
+    // foreach($result as $k => $v) {
+    
+    
+    $lat = array();
+    $lng = array();
+    $total_venue = array();
+    
+    foreach($result as $history) {
+      $total_venue[] = $history->venue;
+    }
+    
+    foreach($result as $history) {
+      $count ++;
+      $counter ++;
+      $temp = $counter-1;
+      
+      $lat[] = $history->lat;
+      $lng[] = $history->lng;
+      $temp_venue[] = $history->venue;
+      
+      // var_dump($lat);
+      // var_dump($lng);
+      
+      if($count%2 > 0) {
+          echo '<li>';
+      } else {
+          echo '<li class="timeline-inverted">';
+      }
+      echo "
+        <div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div>
+        <div class='timeline-panel'>
+            <div class='timeline-heading'>
+              <div class='d-flex'>
+                <div class='p2'>
+                  <h4 class='timeline-title p-2'>{$history->venue}</h4>
+                </div>
+                ";
+                if($history->address != 'NIL' && $history->address != NULL) {
+                 echo "<div class='ml-auto p-2'>{$history->address}</div>";
+                }
+                echo "
+              </div>";
+              if($counter > 0 && count($total_venue)>= $counter) {
+                echo "<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>";
+                
+                // var_dump($temp);
+                // var_dump($counter);
+                // var_dump($lat[$temp]);
+                // var_dump($lng[$temp]);
+                // var_dump($lat[$counter]);
+                // var_dump($lat[$counter]);
+                // var_dump(calculate_Process($lat[$temp], $lng[$temp], $lat[$counter], $lng[$counter]));
+                
+                echo " ".calculate_Process($lat[$temp], $lng[$temp], $lat[$counter], $lng[$counter]);
+                // echo calculate_Process($temp_venue[$temp], $temp_venue[$counter]);
+                echo "</small></p>";  
+                }
+        echo "
+            </div>
+            <div class='timeline-body'>
+              <p>Description:</p>
+              <p>{$history->venueId}</p>
+            </div>
+        </div>
+        </li>";
+        
+      // }
+      
+    }
+    
+    echo "</ul></div>";
     ?>
 
-
-    <!-- <div class="container">
-        <div class="page-header">
-            <h1 id="timeline">Timeline</h1>
-        </div>
-        <ul class="timeline">
-            <li>
-            <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                </div>
-            </div>
-            </li>
-            <li class="timeline-inverted">
-            <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="timeline-badge danger"><i class="glyphicon glyphicon-credit-card"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                </div>
-            </div>
-            </li>
-            <li class="timeline-inverted">
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                <hr>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    </ul>
-                </div>
-                </div>
-            </div>
-            </li>
-            <li>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                </div>
-            </div>
-            </li>
-            <li class="timeline-inverted">
-            <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                </div>
-            </div>
-            </li>
-        </ul>
-    </div> -->
 </body>
 </html>
