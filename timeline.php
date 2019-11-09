@@ -17,12 +17,12 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style/timeline.css">
-    
+
     <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/scroller.css">
     <script type="text/javascript" src="javascript/scroller.js"></script>
-    
+
     <?php include "nav.php"; ?>
 
 </head>
@@ -48,41 +48,42 @@
     <?php
     $dao = new HistoryDAO();
     $result = $dao->getTimeLine();
-    
+
     // var_dump($result);
-    
+
     echo '<div class="page-header" style="padding-left: 50px; padding-right:50px">
             <h1 id="timeline">Timeline</h1>
             </div>
             <div style="padding-left: 50px; padding-right:50px">
             <ul class="timeline">';
-    
+
     $count = 0;
     $counter = -1;
     $temp = -1;
     // foreach($result as $k => $v) {
-    
-    
+
+
     $lat = array();
     $lng = array();
     $total_venue = array();
-    
+
     foreach($result as $history) {
       $total_venue[] = $history->venue;
     }
-    
+
     foreach($result as $history) {
       $count ++;
       $counter ++;
       $temp = $counter-1;
-      
+
       $lat[] = $history->lat;
       $lng[] = $history->lng;
       $temp_venue[] = $history->venue;
-      
+
+      var_dump($history->venueId);
       // var_dump($lat);
       // var_dump($lng);
-      
+
       if($count%2 > 0) {
           echo '<li>';
       } else {
@@ -104,7 +105,7 @@
               </div>";
               if($counter > 0 && count($total_venue)>= $counter) {
                 echo "<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>";
-                
+
                 // var_dump($temp);
                 // var_dump($counter);
                 // var_dump($lat[$temp]);
@@ -112,24 +113,49 @@
                 // var_dump($lat[$counter]);
                 // var_dump($lat[$counter]);
                 // var_dump(calculate_Process($lat[$temp], $lng[$temp], $lat[$counter], $lng[$counter]));
-                
+
+                // https://api.foursquare.com/v2/venues/VENUE_ID=5083df13e4b0a0ddb3ae6051?client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030
+
+                // https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=YYYYMMDD
+
                 echo " ".calculate_Process($lat[$temp], $lng[$temp], $lat[$counter], $lng[$counter]);
                 // echo calculate_Process($temp_venue[$temp], $temp_venue[$counter]);
-                echo "</small></p>";  
+                echo "</small></p>";
                 }
         echo "
             </div>
             <div class='timeline-body'>
               <p>Description:</p>
-              <p>{$history->venueId}</p>
+              <p>";
+
+              $url = "https://api.foursquare.com/v2/venues/{$history->venueId}?client_id=UEYIIOJSEV0ZA4UQHMHRB2NOLAAHFFI5OMG5IBJVCMV21SGG&client_secret=22I2YDXRFJVAIOZZSY2XVKO2BGAGSOCK5UGY422AVFMPHSE3&v=20191030";
+              
+              $content = file_get_contents($url);
+              $phpObj = json_decode($content);
+              
+              $response = $phpObj->response; 
+              $venue = $response->venue;
+              $contact = $venue->contact;
+              
+              if($contact->formattedPhone != null) {
+                echo "Contact: ".$contact->formattedPhone."<br>";
+              }
+              if($contact->twitter != null) {
+                echo "Twitter: ".$contact->twitter."<br>";
+              }
+              if($contact->facebookName != null) {
+                echo "Facebook: ".$contact->facebookName."<br>";
+              }
+
+              echo "</p>
             </div>
         </div>
         </li>";
-        
+
       // }
-      
+
     }
-    
+
     echo "</ul></div>";
     ?>
 
