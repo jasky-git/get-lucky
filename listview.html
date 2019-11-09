@@ -120,17 +120,19 @@
                     
                     <div class="col-md-5">
                         <div class="p-4 mb-3 bg-white">
-                            <img src="images/hero_bg_1.jpg" alt="Image" class="img-fluid mb-4 rounded">
-                            <h3 class="h5 text-black mb-3">More Info</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur? Fugiat quaerat eos qui, libero neque sed nulla.</p>
-                            <p><a href="#" class="btn btn-primary px-4 py-2 text-white">Learn More</a></p>
+                            <h3 class="h5 text-black mb-3">Your Itinerary: </h3>
+                            <div class="result" id="result"></div>
+                            <div class="row form-group">
+                                <div class="btn-result pl-4"></div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- over here -->
-            <div class="container">
+            <!-- <div class="container">
                 <div class="row custom-one">
                     <div class="col-md-12">
                         <div class="row form-group">
@@ -143,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             
         </div>
 
@@ -264,8 +266,9 @@
         function assignTime(data,startTime,endTime,dte,title,categories,startVenue){
             console.log(data);
             timeArr = [];
-            document.querySelector('.custom-one').classList.add('bg-white');
-            result.insertAdjacentHTML('beforeend', `<h2 class='mb-3'>Results</h2>`);
+
+            // document.querySelector('.custom-one').classList.add('bg-white');
+            // result.insertAdjacentHTML('beforeend', `<h2 class='mb-3'>Results</h2>`);
             let counterTmp = 1;
 
             // based on time, get activities
@@ -274,7 +277,12 @@
                 console.log("get morning activity");
                 console.log('---- ' + data[0].venue);
                 timeArr.push(data[0]);
-                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[0].venue}</h5>`);
+                if(endTime > "12:00"){
+                    result.insertAdjacentHTML('beforeend', `${startTime} - 12:00  <strong>${data[0].venue}</strong><br>`);
+                }
+                else{
+                    result.insertAdjacentHTML('beforeend', `${startTime} - ${endTime}  <strong>${data[0].venue}</strong><br>`);
+                }
                 counterTmp ++;
             }
 
@@ -282,7 +290,7 @@
                 console.log("have lunch");
                 console.log('---- ' + data[1].venue);
                 timeArr.push(data[1]);
-                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[1].venue}</h5>`);
+                result.insertAdjacentHTML('beforeend', `12:00 - 13:00  <strong>Have Lunch at: ${data[1].venue}</strong></style><br>`);
                 counterTmp ++;
             }
 
@@ -290,15 +298,25 @@
                 console.log("get afternoon activity 1");
                 console.log('---- ' + data[2].venue);
                 timeArr.push(data[2]);
-                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[2].venue}</h5>`);
+                if(endTime >= "15:30"){
+                    result.insertAdjacentHTML('beforeend', `13:00 - 15:30  <strong>${data[2].venue}</strong><br>`);
+                }
+                else{
+                    result.insertAdjacentHTML('beforeend', `13:00 - ${endTime}  <strong>${data[2].venue}</strong><br>`);
+                }
                 counterTmp ++;
             }
 
-            if(startTime <= "15:30" && endTime >= "18:00") {
+            if(startTime <= "15:30" &&  endTime >= "18:00") {
                 console.log("get afternoon activity 2");
                 console.log('---- ' + data[3].venue);
                 timeArr.push(data[3]);
-                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[3].venue}</h5>`);
+                if(endTime >= "18:00"){
+                    result.insertAdjacentHTML('beforeend', `15:30 - 18:00  <strong>${data[3].venue}</strong><br>`);
+                }
+                else{
+                    result.insertAdjacentHTML('beforeend', `15:30 - ${endTime}  <strong>${data[3].venue}</strong><br>`);
+                }
                 counterTmp ++;
             }
 
@@ -307,7 +325,7 @@
                 console.log("get dinner");
                 console.log('---- ' + data[4].venue);
                 timeArr.push(data[4]);
-                result.insertAdjacentHTML('beforeend', `<h5>Activity ${counterTmp}: ${data[4].venue}</h5>`);
+                result.insertAdjacentHTML('beforeend', `18:00 - 19:00  <strong>Grab Dinner at: ${data[4].venue}</strong><br>`);
                 counterTmp ++;
             }
             
@@ -346,8 +364,10 @@
         function createButtons(){
             //creation of submit and retry buttons
             btnResult.insertAdjacentHTML('beforeend', `
-                                        <button type='button' class='submit-btn btn btn-success py-2 px-4 text-white' onclick='clickSubmit(timeArr)'>Submit</button>
-                                        <button type='button' class='retry-btn btn btn-danger py-2 px-4 text-white' onclick='clickRetry()'>Retry</button>`
+                                        <br><br>
+                                        <button type='button' class='retry-btn btn btn-danger py-2 px-4 text-white' onclick='clickRetry()'>Find New Activties</button>
+                                        <button type='button' class='submit-btn btn btn-success py-2 px-4 text-white' onclick='clickSubmit(timeArr)'>Proceed to Plan</button>
+                                        `
             );
         }
 
