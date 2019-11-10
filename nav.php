@@ -1,5 +1,6 @@
 <?php
   require_once 'UserDAO.php';
+  session_start();
 ?>
 
 <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
@@ -110,6 +111,7 @@
     font-size: 12px;
     margin-top:20px;
     margin-left:0px;
+    margin-bottom:10px;
   }
 
   .NewAccountButton {
@@ -214,19 +216,19 @@ function off() {
         <div class="d-none d-xl-inline-block">
 
           <?php
-          if (isset($_SESSION['userid'])){?>
-            <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" class="site-menu js-clone-nav mx-auto d-none d-lg-block">Hello</label>
+          if (isset($_SESSION['name'])){?>
+            <label id="loginorSignup"><?php echo "Hello, " . ($_SESSION['name'])?> &nbsp;<a href="logout.php">Log Out</a></label>
           <?php }
 
-          if (!isset($_SESSION['userid'])){?>
-            <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" class="site-menu js-clone-nav mx-auto d-none d-lg-block">Login / Sign Up</label>
+          if (!isset($_SESSION['name'])){?>
+            <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" class="site-menu js-clone-nav mx-auto d-none d-lg-block">Login/Signup</label>
           <?php }
         ?>
 
         <div id="login-form" onmouseover="mouseOver()" onmouseout="mouseOut()">
               <h6 style="text-align:left; margin-left:10px; margin-top:30px; margin-bottom:20px;">Sign In with Email Address</h6>
               <form id="loginform" method="post" action="login_process.php" >
-                <input type="text" name="userid" placeholder= "User ID" size="35" required />
+                <input type="text" name="name" placeholder= "User ID" size="35" required />
                 <input type="password" name="password" placeholder= "Password" size="35" required /><br>
                 <span style="margin:10px; color: blue; font-size:12px;"><a href="forgotpassword.php">Forgot password?</a></span>
                 <button type="submit" class="button">Submit</button>        
@@ -235,7 +237,7 @@ function off() {
               <hr/>
               
               <h6 style="color:grey;text-align:center;">Or Sign In Using</h6>
-              <span style="margin-left:95px;"><img src="image/social.png" height="40px"></span>
+              <span><img src="image/social.png" height="40px"></span>
         </div>
 
         <div id="overlay">
