@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <html>
     <head>
     
@@ -28,7 +24,7 @@
             #signup-form{
                 margin-top:30px;
                 width:450px;
-                height:550px;
+                height:500px;
                 margin-left:auto;
                 margin-right:auto;
                 background-color:#F2ECEE;
@@ -73,31 +69,14 @@
                 <form method="post" action="login_process.php">
                     <br>
                     <label>User ID</label><br>
-                    <input type="text" name="name" size="40" style="height:35px;" required />
-                    <br>
-                    <br>
+                    <input type="text" name="userid" size="40" style="height:35px;" required />
+                    <br><br>
                     <label>Password</label><br>
                     <input type="password" name="password" size="40" style="height:35px;" required />
-                    <br>
-                    <a href="forgotpassword.php" style="color:blue;" >Forgot password?</a>
-                    <br>
-                    <br>
+                    <br><br>
                     <button type="submit" class="LoginButton">Log In</button> 
                 </form>
                 <input type="button" class="button" value="Create Account" onclick="window.location.href='createaccount.php'" />
-                <?php
-                    if (isset($_SESSION["error"])){
-                        if ($_SESSION["error"] == "Invalid username or password!"){
-                            ?>
-    
-                            <label style="color:red;">Invalid username or password!</label><br>
-    
-                            <?php
-                        }
-                    }
-                    
-                ?>
-                
                 <hr/>
                 <h6 style="color:grey;text-align:center;">Or Sign In Using</h6>
                 <span style="margin-left:95px;"><img src="image/social.png" height="40px"></span>
