@@ -1,5 +1,7 @@
 <?php
-  session_start();
-  session_destroy();
-  header("Location: home.html");
+
+session_start() ;
+session_destroy() ;
+
+header("Location: home.html");
 ?>
