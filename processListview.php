@@ -15,11 +15,9 @@ $title = $_POST['title'];
 $date = $_POST['date'];
 $userid = $_SESSION['userid'];
 
-$_SESSION['title'] = $_POST['title'];
-
 $historydao = new HistoryDAO();
 $historydao->addIternary($venueId,$venue,$address,$lat,$lng,$title,$date,$userid);
 
-echo 'Added into Database';
+// echo 'Added into Database';
 
 ?>

@@ -353,26 +353,45 @@
             getAPIData(categories,startVenue,startTime,endTime,dte,title);
         }
 
-        function clickSubmit(timeArr){
-        
-            timeArr.forEach(value => {
-                console.log(value);
-                $.ajax({
-                    type: 'POST',
-                    url: 'processListView.php',
-                    data: {"venueId": value.id, "venue": value.venue, "address": value.address, "lat": value.lat, "lng": value.lng, "title":title, "date":dte},
-                    success: function(msg){
-                        if(msg) {
-                            console.log(msg);
-                        }
-                    }
-                });
-            });
+        let itemProcessed = 0;
 
-            //go to next page, for now goes to home page
-            window.location.href = './tele_confirmation_process.php';
+        function clickSubmit(timeArr){
+            timeArr.forEach((value,index,array) => {
+                fetch('processListview.php', {
+                    method: 'POST', 
+                    headers: {
+                        'Content-Type': "application/x-www-form-urlencoded"
+                    },
+                    body: "venueId="+value.id+"&venue="+value.venue+"&address="+value.address+"&lat="+value.lat+"&lng="+value.lng+"&title="+title+"&date="+dte,
+                })
+                .then(response => response.text())
+                .then(data => {
+                    // console.log(data);
+                    itemProcessed++;
+                    if (itemProcessed === array.length){
+                        //call function
+                        processTelegram();
+                    }
+                })
+                .catch(error => console.log(error))
+            });
         }
 
+        function processTelegram(){
+            fetch('tele_confirmation_process.php',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/x-www-form-urlencoded"
+                },
+                body: "title="+title
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('telegram message send');
+                return window.location.href = './home.html';
+            })
+            .catch(error => console.log(error));
+        }
 
         function createButtons(){
             //creation of submit and retry buttons
