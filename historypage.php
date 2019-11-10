@@ -1,10 +1,4 @@
-<?php 
-  require 'HistoryDAO.php';
-  // include("include/authenticate_session.php");
-?>
 <html>
-  
-  
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -49,7 +43,11 @@
       }
 
     </style>
-    <?php include 'nav.php' ?>
+    <?php 
+      include 'nav.php';
+      require 'HistoryDAO.php';
+      include("include/authenticate_session.php");
+    ?>
   </head>
 <body>
   <div class="container mt-5 mb-5">
@@ -60,13 +58,18 @@
           <?php
             $dao = new HistoryDAO();
             //$result = $dao->getAllByUserID($_SESSION['userid']);
-            $result = $dao->getAllByUserID();
+            
+            if(isset($_SESSION['userid'])){
+              $userid = $_SESSION['userid'];
+            }
+            $result = $dao->getAllByUserId($userid);
 
             foreach($result as $history) {
               // var_dump($history);
+              $_SESSION['tl_title'] = $history->title;
               echo "            
                 <li>
-                  <a target='_blank' href=''>{$history->title}</a>
+                  <a target='_blank' href='timeline.php'>{$history->title}</a>
                   <a href='#' class='float-right'>{$history->date}</a>
                   <p>Venue: {$history->venue}</p>
                 </li>

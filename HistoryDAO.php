@@ -80,7 +80,7 @@ class HistoryDAO {
   }
 
   //to include this in getAllByUserID($userid)
-  public function getAllByUserID(){
+  public function getAllByUserId($userid){
     //WHERE USER = :USER
     // $sql = "SELECT DISTINCT date, venue FROM history";
     // $sql = "SELECT DISTINCT title, venue, date FROM history";
@@ -90,7 +90,7 @@ class HistoryDAO {
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
 
-    $userid = '1';
+    // $userid = '1';
     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
 
     $stmt->setFetchMode(PDO::FETCH_ASSOC);

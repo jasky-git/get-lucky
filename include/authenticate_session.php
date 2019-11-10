@@ -1,7 +1,7 @@
 <?php
-  if(!isset($_SESSION['user'])){
+  if(!isset($_SESSION['name'])){
     header("Location: home.html");
   } else {
-    $user = $_SESSION['user'];
+    $user = $_SESSION['name'];
   }
 ?>

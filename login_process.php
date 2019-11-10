@@ -13,18 +13,15 @@
             $user = $userdao -> getUser($name,$password);
 
             if (!empty($user)) {
-                if (strlen($name) == strlen($user->name) && $name === $user->name && $user->authenticate($password)) {
-                    
-                    $_SESSION['userid'] = $user->userid;
-                    $_SESSION['name'] = $name;
-                    unset($_SESSION['error']);
-                    header("Location: home.html");
-                    exit();
-                }
+              $_SESSION['userid'] = $user->userid;
+              $_SESSION['name'] = $name;
+              unset($_SESSION['error']);
+              header("Location: home.html");
+              exit();
             }
 
-            
+
             $_SESSION["error"] = "Invalid username or password!";
-            header("Location: login.php");
+            header("Location: home.html");
 
         ?>

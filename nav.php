@@ -206,7 +206,13 @@ function off() {
               </ul>
             </li>
             <li><a disabled>Blogs</a></li>
-            <li><a href="listview.html">Create a Plan</a></li>
+            <li class="has-children">
+              <a>Features</a>
+              <ul class="dropdown">
+                <li><a href="listview.html">Create a Plan</a></li>
+                <li><a href="historypage.php">History</a></li>
+              </ul>
+            </li>
             <!-- <li><a href="booking.html">Book Online</a></li> -->
           </ul>
         </nav>
