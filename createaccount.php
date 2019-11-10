@@ -1,3 +1,40 @@
+<?php
+  include "UserDAO.php";
+  session_start();
+  // session_destroy();
+  // if($_POST['name'] && $_POST['email'] && $_POST['tele_username'] && $_POST['password'] && $_POST['re_password']) {
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $tele_username = $_POST['tele_username'];
+      $password = $_POST['password'];
+      $re_password = $_POST['re_password'];
+      
+      $dao = new UserDAO();
+      $result = $dao->addUser($name, $email, $tele_username, $password);
+      
+      var_dump($result);
+      
+      if($result) {
+        $result = "<script type='text/javascript'>alert('Account Creation Successful');</script>";
+        
+        $_SESSION['result'] = $result;
+      } else {
+        $result = "<script type='text/javascript'>alert('Account Creation Unsuccessful');</script>";
+        $_SESSION['result'] = $result;
+      }
+      header("Location: home.html");
+  // } else {
+    
+    // $result = "<script type='text/javascript'>alert('Account Creation Unsuccessful');</script>";
+    // $_SESSION['result'] = $result;
+    
+    // // header("Location: home.html");
+  // }
+
+
+?>
+
+<!--
 <html>
     <head>
     
@@ -93,15 +130,16 @@
             </div>
         </div>
         <?php
-            if (isset($_GET['error'])){
-                if ($_GET['error'] == "pwdnm")
+            // if (isset($_GET['error'])){
+                // if ($_GET['error'] == "pwdnm")
                 {?>
                     <script>
                         document.getElementById("pwderror").style.visibility = "visible";
                         document.getElementById("pwderror2").style.visibility = "visible";
                     </script>
-                <?php }
-            }
-        ?>
+                // <?php }
+            // }
+        // ?>
     </body>
 </html>
+-->

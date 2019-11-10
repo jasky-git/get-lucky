@@ -217,33 +217,30 @@ function off() {
           <?php
           if(isset($_SESSION['error'])){
             echo "<script type='text/javascript'>alert('invalid username or password!');</script>";
-          } 
-          
+          }
+
+          if(isset($_SESSION['result'])){
+            echo $_SESSION['result'];
+            unset($_SESSION['result']);
+          }
+
           if (isset($_SESSION['name'])){
             unset($_SESSION['error']);
-            echo "Hello ".$_SESSION['name'];
+            echo "Hello, ".$_SESSION['name']." ";
             ?>
 
             <a href="logout.php"> Logout </a>
 
           <?php } else { ?>
             <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" class="site-menu js-clone-nav mx-auto d-none d-lg-block">Login / Sign Up</label>
-          <?php
-            }
-          
-            // function logout() {
-              // unset($_SESSION['name']);
-              // session_destroy();
-              // header("Location: home.html");
-            // }
-          ?>
+        <?php } ?>
 
         <div id="login-form" onmouseover="mouseOver()" onmouseout="mouseOut()">
               <h6 style="text-align:left; margin-left:10px; margin-top:30px; margin-bottom:20px;">Sign In with Email Address</h6>
               <form id="loginform" method="post" action="login_process.php" >
                 <input type="text" name="name" placeholder= "Username" size="35" required />
                 <input type="password" name="password" placeholder= "Password" size="35" required /><br>
-                <span style="margin:10px; color: blue; font-size:12px;"><a href="forgotpassword.php">Forgot password?</a></span>
+                <span style="margin:10px; color: blue; font-size:12px;"><a href="">Forgot password?</a></span>
                 <button type="submit" class="button">Submit</button>
               </form>
               <input type="button" class="NewAccountButton" value="Create Account" onclick="on()" />
@@ -259,15 +256,37 @@ function off() {
               <img src="image/round-delete-button.png" onclick="off()" style="height:30px; width: 30px;">
               <br><br>
               <h1 style="text-align:center; color: black;"><strong>Create Your Account</strong></h1>
-                <!-- <form id="createaccount" method="post" action="<?= $_SERVER['PHP_SELF']; ?>"> -->
-                <form id="createaccount" method="post" action="<?= home.html ?>">
-                  <input type="text" id="name" name="name" size="40" style="height:35px;" required placeholder="Name"/>
-                  <input type="email" id="email" name="email" size="40" style="height:35px;" required placeholder="Email"/>
-                  <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required placeholder="Telegram Username"/>
-                  <input type="password" name="password" size="40" style="height:35px;" required placeholder="Password"/>
-                  <input type="password" name="re-password" size="40" style="height:35px;" required placeholder="Confirm Password"/>
+                <!-- <form id="createaccount" method="post" action="<?php //$_SERVER['PHP_SELF']; ?>"> -->
+                <form id="createaccount" method="post" action="createaccount.php">
+                  <input type="text" id="name" name="name" size="40" style="height:35px;" required placeholder="Name" required/>
+                  <input type="email" id="email" name="email" size="40" style="height:35px;" required placeholder="Email" required/>
+                  <input type="text" id="tele" name="tele_username"  size="40" style="height:35px;" required placeholder="Telegram Username" required/>
+                  <input type="password" id="password" name="password" size="40" style="height:35px;" required placeholder="Password" required/>
+                  <input type="password" id="re_password" name="re_password" size="40" style="height:35px;" required placeholder="Confirm Password" required/>
+                  <label style="color: red;" id="match_password"></label>
+
                   <!-- <label id="pwderror2" style="color:red;visibility:hidden;">Password doesn't match </label> -->
                   <button type="submit" name="create_submit" onclick="off()" class="button">Create</button>
+
+                  <script>
+                    var password = document.getElementById("password")
+                      , confirm_password = document.getElementById("re_password");
+
+                    function validatePassword(){
+                      if(password.value != confirm_password.value) {
+                        confirm_password.setCustomValidity("Passwords Don't Match");
+                        document.getElementById('match_password').innerHTML = "Passwords Don't Match!";
+                      } 
+                      
+                      else {
+                        confirm_password.setCustomValidity('');
+                        // window.location.replace("createaccount.php");
+                      }
+                    }
+
+                    // password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+                  </script>
                 </form>
             </div>
           </div>

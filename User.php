@@ -23,6 +23,13 @@ class User {
         $this->email = $email;
     }
     
+    public function __construct4($name='', $email='', $tele_username='', $password='') {
+        $this->name = $name;
+        $this->email = $email;
+        $this->tele_username = $tele_username;
+        $this->password = $password;
+    }
+    
     public function __construct5($userid='', $name='', $email='', $tele_username='', $password='') {
         $this->userid = $userid;
         $this->name = $name;
