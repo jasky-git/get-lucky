@@ -1,8 +1,5 @@
 <?php
   error_reporting(0);
-  // include 'include/authenticate_session.php';
-  include 'HistoryDAO.php';
-  include 'include/calculate_process.php';
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +21,12 @@
     <script type="text/javascript" src="javascript/scroller.js"></script>
     
     <h5>
-      <?php include "nav.php"; ?>
+      <?php 
+        include "nav.php"; 
+        include 'include/authenticate_session.php';
+        include 'HistoryDAO.php';
+        include 'include/calculate_process.php';
+      ?>
     </h5>
 </head>
 <body>
@@ -46,9 +48,21 @@
   </div>
   -->
 
-    <?php
+  <?php
+            
+    // if(isset($_SESSION['tl_title'])){
+      // $tl_title = $_SESSION['tl_title'];
+    // }
+    if(isset($_GET['title'])){
+      $title = $_GET['title'];
+      // var_dump($_GET['title']);
+    }
+    if(isset($_SESSION['userid'])){
+      $userid = $_SESSION['userid'];
+    }
+    
     $dao = new HistoryDAO();
-    $result = $dao->getTimeLine();
+    $result = $dao->getTimeLine($userid,$title);
 
     // var_dump($result);
 
@@ -105,7 +119,7 @@
                 echo "
               </div>";
               if($counter > 0 && count($total_venue)>= $counter) {
-                echo "<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>";
+                echo "<p><h5><small class='text-muted'><i class='glyphicon glyphicon-time'></i>";
 
                 // var_dump($temp);
                 // var_dump($counter);
@@ -121,7 +135,7 @@
 
                 echo " ".calculate_Process($lat[$temp], $lng[$temp], $lat[$counter], $lng[$counter]);
                 // echo calculate_Process($temp_venue[$temp], $temp_venue[$counter]);
-                echo "</small></p>";
+                echo "</small></h5></p>";
                 }
         echo "
             </div>
@@ -161,7 +175,7 @@
     }
 
     echo "</ul></div>";
-    ?>
+  ?>
 
 </body>
 </html>

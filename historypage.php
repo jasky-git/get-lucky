@@ -66,12 +66,11 @@
 
             foreach($result as $history) {
               // var_dump($history);
-              $_SESSION['tl_title'] = $history->title;
+              // $_SESSION['tl_title'] = $history->title;
               echo "            
                 <li>
-                  <a target='_blank' href='timeline.php'>{$history->title}</a>
+                  <a target='_blank' href='timeline.php?title={$history->title}'>{$history->title}</a>
                   <a href='#' class='float-right'>{$history->date}</a>
-                  <p>Venue: {$history->venue}</p>
                 </li>
               ";
             }

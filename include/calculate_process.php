@@ -18,10 +18,10 @@ function calculate_Process($lat1, $lng1, $lat2, $lng2) {
   // function calculate_Process($origin, $destination) {
 
     $mode = "driving";
+    //Please use your own Google Distance Matrix API KEY if you want to use the functionality
     $myapikey = "";
 
     $baseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&";
-
 
     //If use Latitude and Longtitude
     // $lat1 = $_SESSION["lat1"];

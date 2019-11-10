@@ -19,9 +19,8 @@ class History {
         }
     }
 
-    public function __construct3($date, $venue, $title) {
+    public function __construct2($date, $title) {
         $this->date = $date;
-        $this->venue = $venue;
         $this->title = $title;
     }
     

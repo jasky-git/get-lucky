@@ -47,16 +47,15 @@ class HistoryDAO {
   }
 
   //parameter: date and userid
-  public function getTimeLine(){
+  public function getTimeLine($userid, $title){
     $sql = "SELECT venueId, venue, address, lat, lng FROM history WHERE userId = :userid AND title = :title";
-    // $sql = "SELECT venueId, venue, address,lat,lng FROM history";
 
     $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
     $stmt = $conn->prepare($sql);
 
-    $userid = '1';
-    $title = 'hello';
+    // $userid = '1';
+    // $title = 'hello';
     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
     $stmt->bindParam(':title', $title, PDO::PARAM_STR);
 
@@ -64,10 +63,7 @@ class HistoryDAO {
     $stmt->execute();
 
     $result = array();
-
-    //PDOStatement::fetch styles
-    // $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // $result[] = new history($row['date'], $row['venue']);
         $result[] = new history($row['venueId'], $row['venue'], $row['address'], $row['lat'], $row['lng']);
@@ -84,7 +80,7 @@ class HistoryDAO {
     //WHERE USER = :USER
     // $sql = "SELECT DISTINCT date, venue FROM history";
     // $sql = "SELECT DISTINCT title, venue, date FROM history";
-    $sql = "SELECT DISTINCT date, venue, title FROM history WHERE userId = :userid";
+    $sql = "SELECT DISTINCT date, title FROM history WHERE userId = :userid ORDER BY date";
 
     $connMgr = new ConnectionManager();
     $conn = $connMgr->getConnection();
@@ -103,7 +99,7 @@ class HistoryDAO {
 
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // $result[] = new history($row['date'], $row['venue']);
-        $result[] = new history($row['date'], $row['venue'], $row['title']);
+        $result[] = new history($row['date'], $row['title']);
     }
 
     // clean up resources
