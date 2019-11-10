@@ -25,7 +25,6 @@
 
             
             $_SESSION["error"] = "Invalid username or password!";
-            header("Location: home.html");
-            //header("Location: login.php");
+            header("Location: login.php");
 
         ?>
