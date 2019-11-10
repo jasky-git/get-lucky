@@ -22,17 +22,17 @@ class UserDAO {
         }
     }
 
-    public function addUser($user){
-        $sql = "INSERT IGNORE INTO user (name, email, tele_username, password) VALUES (:name, :email, :tele_username, :password)";
+    public function addUser($name, $email, $tele_username, $password){
+        $sql = "INSERT INTO user (name, email, tele_username, password) VALUES (:name, :email, :tele_username, :password)";
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
         $stmt = $conn->prepare($sql);
         
-        $stmt->bindParam(':name', $user->name, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $user->email, PDO::PARAM_STR);
-        $stmt->bindParam(':tele_username', $user->tele_username, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $user->password, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':tele_username', $tele_username, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {

@@ -10,7 +10,6 @@
   $user = $userdao -> getUser($name, $password);
 
   if(empty($user) && $user == null) {
-    echo " alert('Invalid Login!'); ";
     header("Location: home.html");
     $_SESSION['error'] = 'Invalid username or password!';
   }
