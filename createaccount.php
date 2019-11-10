@@ -1,3 +1,40 @@
+<?php
+  include "UserDAO.php";
+  session_start();
+  // session_destroy();
+  // if($_POST['name'] && $_POST['email'] && $_POST['tele_username'] && $_POST['password'] && $_POST['re_password']) {
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $tele_username = $_POST['tele_username'];
+      $password = $_POST['password'];
+      $re_password = $_POST['re_password'];
+      
+      $dao = new UserDAO();
+      $result = $dao->addUser($name, $email, $tele_username, $password);
+      
+      var_dump($result);
+      
+      if($result) {
+        $result = "<script type='text/javascript'>alert('Account Creation Successful');</script>";
+        
+        $_SESSION['result'] = $result;
+      } else {
+        $result = "<script type='text/javascript'>alert('Account Creation Unsuccessful');</script>";
+        $_SESSION['result'] = $result;
+      }
+      header("Location: home.html");
+  // } else {
+    
+    // $result = "<script type='text/javascript'>alert('Account Creation Unsuccessful');</script>";
+    // $_SESSION['result'] = $result;
+    
+    // // header("Location: home.html");
+  // }
+
+
+?>
+
+<!--
 <html>
     <head>
     
@@ -68,9 +105,15 @@
                     <h2 style="text-align:center">Create New Account</h2>
                 <form method="post" action="create_account_process.php">
                     <br>
-                    <label>User ID</label><br>
-                    <input type="text" id="userid" name="userid" size="40" style="height:35px;" required />
-                    <br><br>
+                    <label>Name</label><br>
+                    <input type="text" id="name" name="name" size="40" style="height:35px;" required />
+                    <br>
+                    <label>Email</label><br>
+                    <input type="email" id="email" name="email" size="40" style="height:35px;" required />
+                    <br>
+                    <label>Telegram Username</label><br>
+                    <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required />
+                    <br>
                     <label>Password</label><br>
                     <input type="password" name="password" size="40" style="height:35px;" required />
                     <br>
@@ -81,30 +124,22 @@
                     <br>
                     <label id="pwderror2" style="color:red;visibility:hidden;">Password doesn't match </label>
                     <br>
-                    <label>Name</label><br>
-                    <input type="text" id="name" name="name" size="40" style="height:35px;" required />
-                    <br><br>
-                    <label>Email</label><br>
-                    <input type="email" id="email" name="email" size="40" style="height:35px;" required />
-                    <br><br>
-                    <label>Telegram Username</label><br>
-                    <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required />
-                    <br><br>
                     <button type="submit" class="button">Create Account</button> 
                 </form>
                 <input type="button" class="LoginButton" value="Already owned an account? Login here" onclick="window.location.href='login.php'" />
             </div>
         </div>
         <?php
-            if (isset($_GET['error'])){
-                if ($_GET['error'] == "pwdnm")
+            // if (isset($_GET['error'])){
+                // if ($_GET['error'] == "pwdnm")
                 {?>
                     <script>
                         document.getElementById("pwderror").style.visibility = "visible";
                         document.getElementById("pwderror2").style.visibility = "visible";
                     </script>
-                <?php }
-            }
-        ?>
+                // <?php }
+            // }
+        // ?>
     </body>
 </html>
+-->

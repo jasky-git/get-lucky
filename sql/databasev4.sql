@@ -30,7 +30,7 @@ USE `get-lucky-db`;
 
 DROP TABLE IF EXISTS `history`;
 CREATE TABLE `history` (
-  `historyId` int(11) NOT NULL,
+  `historyId` int(100) NOT NULL,
   `venueId` varchar(255) NOT NULL,
   `venue` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -70,6 +70,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userid` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `email` varchar (255) NOT NULL,
   `tele_username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -78,11 +79,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `name`, `tele_username`, `password`) VALUES
-('1', 'peter', 'peter@smu.edu.sg', 'apple'),
-('2', 'tom', 'tom@smu.edu.sg', 'apple'),
-('3', 'jack', 'jack@smu.edu.sg', 'orange'),
-('4', 'joe', 'joe@smu.edu.sg', 'orange');
+INSERT INTO `user` (`userid`, `name`, `email`, `tele_username`, `password`) VALUES
+('1', 'peter', 'peter@smu.edu.sg', 'petertan', 'apple'),
+('2', 'tom', 'tom@smu.edu.sg', 'tomtan','apple'),
+('3', 'jack', 'jack@smu.edu.sg', 'jacktan','orange'),
+('4', 'joe', 'joe@smu.edu.sg', 'joetan','orange');
 
 --
 -- Indexes for dumped tables
@@ -108,7 +109,10 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `historyId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `historyId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  
+ALTER TABLE `user`
+  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

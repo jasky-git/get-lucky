@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Timeline</title>
+    <title>Confirmation</title>
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -26,26 +26,25 @@
     <h5>
       <?php include "nav.php"; ?>
     </h5>
+    <h1 class="mt-5" style="text-align:center;"> Confirmation </h1>
+
 </head>
 <body>
-    <!-- Then put toasts within -->
-    <!--
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="..." class="rounded mr-2" alt="...">
-        <strong class="mr-auto">Bootstrap</strong>
-        <small>11 mins ago</small>
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="toast-body">
-        Hello, world! This is a toast message.
-      </div>
+    <div>
+      <button type="button" class="btn btn-success" onclick="acceptTimeline()">Yes</button>
+      <button type="button" class="btn btn-warning" onclick="rejectTimeline()">No</button>
+      
+      <?php
+        function acceptTimeline() {
+          header("Location: historypage.php");
+        }
+        
+        function rejectTimeline() {
+          $dao = new HistoryDAO();
+          $reject = $dao->rejectTimeline($title);
+        }
+      ?>
     </div>
-  </div>
-  -->
-
     <?php
     $dao = new HistoryDAO();
     $result = $dao->getTimeLine();
