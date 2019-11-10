@@ -168,7 +168,6 @@
         let categories = '';
         let arr = [];
         let timeArr = '';
-        let submitted = false;
         // categories,startVenue,startTime,endTime,dte,title
 
         /*--------- STARTUP FUNCTION ---------*/
@@ -250,10 +249,12 @@
             console.log(startTime);
             console.log(endTime);
 
-            if(!submitted) {
-                getAPIData(categories,startVenue,startTime,endTime,dte,title);
-                submitted = true;
-            }
+            var itinerary_result = document.getElementById("result");
+            while (itinerary_result.hasChildNodes()) {  
+                itinerary_result.removeChild(itinerary_result.firstChild);
+                }
+            getAPIData(categories,startVenue,startTime,endTime,dte,title);
+            
 
             // validate start time < end time
             if(startTime>endTime) {
