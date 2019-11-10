@@ -1,11 +1,11 @@
 <?php
-  require_once 'UserDAO.php';
+  session_start();
 ?>
 
 <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="bootstrap/bootstrap.min.js">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700"> 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700">
 <link rel="stylesheet" href="Travellers/travelers/fonts/icomoon/style.css">
 
 <link rel="stylesheet" href="Travellers/travelers/css/bootstrap.min.css">
@@ -29,7 +29,7 @@
   .navbar{
     height:50px;
     background-color:black;
-    
+
   }
   .loginSignup:hover{
     background-color: grey;
@@ -45,7 +45,7 @@
     border-left:1px solid black;
     border-right:1px solid black;
     height:420px;
-    width:320px; 
+    width:320px;
     visibility:hidden;
   }
 
@@ -62,7 +62,7 @@
       left:50%;
       top:50%;
       transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);  
+      -ms-transform: translate(-50%,-50%);
   }
 
   #create-account-form{
@@ -129,8 +129,8 @@
 
   #overlay {
   position: fixed;
-  display: none; 
-  width: 100%; 
+  display: none;
+  width: 100%;
   height: 100%;
   top: 0;
   left: 0;
@@ -144,7 +144,7 @@
 </style>
 
 <script>
- 
+
  function mouseOver() {
    document.getElementById("login-form").style.visibility = "visible";
  }
@@ -179,7 +179,7 @@ function off() {
 
   <div class="container">
     <div class="row align-items-center">
-      
+
       <div class="col-6 col-xl-2">
         <h1 class="mb-0"><a href="home.html" class="text-black h2 mb-0">Get Lucky</a></h1>
       </div>
@@ -187,23 +187,24 @@ function off() {
         <nav class="site-navigation position-relative text-right text-lg-center" role="navigation">
 
           <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
-            <li class="active">
+            <!-- class="active" -->
+            <li>
               <a href="home.html">Home</a>
             </li>
 
-            <li><a href="about.html">About</a></li>
+            <li><a disabled>About</a></li>
 
             <li class="has-children">
-              <a href="destination.html">Things To Do</a>
+              <a>Things To Do</a>
               <ul class="dropdown">
-                <li><a href="#">Food</a></li>
-                <li><a href="#">Outdoors & Recreation</a></li>
-                <li><a href="#">Arts & Culture</a></li>
-                <li><a href="#">Indoor Entertainment</a></li>
-                <li><a href="#">Events</a></li>
+                <li><a disabled>Food</a></li>
+                <li><a disabled>Outdoors & Recreation</a></li>
+                <li><a disabled>Arts & Culture</a></li>
+                <li><a disabled>Indoor Entertainment</a></li>
+                <li><a disabled>Events</a></li>
               </ul>
             </li>
-            <li><a href="about.html">Blogs</a></li>
+            <li><a disabled>Blogs</a></li>
             <li><a href="listview.html">Create a Plan</a></li>
             <!-- <li><a href="booking.html">Book Online</a></li> -->
           </ul>
@@ -214,26 +215,40 @@ function off() {
         <div class="d-none d-xl-inline-block">
 
           <?php
-          if (isset($_SESSION['userid'])){?>
-            <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" class="site-menu js-clone-nav mx-auto d-none d-lg-block">Hello</label>
-          <?php }
+          if(isset($_SESSION['error'])){
+            echo "<script type='text/javascript'>alert('invalid username or password!');</script>";
+          } 
+          
+          if (isset($_SESSION['name'])){
+            unset($_SESSION['error']);
+            echo "Hello ".$_SESSION['name'];
+            ?>
 
-          if (!isset($_SESSION['userid'])){?>
+            <a href="logout.php"> Logout </a>
+
+          <?php } else { ?>
             <label id="loginorSignup" class="loginSignup" onmouseover="mouseOver()" onmouseout="mouseOut()" class="site-menu js-clone-nav mx-auto d-none d-lg-block">Login / Sign Up</label>
-          <?php }
-        ?>
+          <?php
+            }
+          
+            // function logout() {
+              // unset($_SESSION['name']);
+              // session_destroy();
+              // header("Location: home.html");
+            // }
+          ?>
 
         <div id="login-form" onmouseover="mouseOver()" onmouseout="mouseOut()">
               <h6 style="text-align:left; margin-left:10px; margin-top:30px; margin-bottom:20px;">Sign In with Email Address</h6>
               <form id="loginform" method="post" action="login_process.php" >
-                <input type="text" name="userid" placeholder= "User ID" size="35" required />
+                <input type="text" name="name" placeholder= "Username" size="35" required />
                 <input type="password" name="password" placeholder= "Password" size="35" required /><br>
                 <span style="margin:10px; color: blue; font-size:12px;"><a href="forgotpassword.php">Forgot password?</a></span>
-                <button type="submit" class="button">Submit</button>        
-              </form> 
+                <button type="submit" class="button">Submit</button>
+              </form>
               <input type="button" class="NewAccountButton" value="Create Account" onclick="on()" />
               <hr/>
-              
+
               <h6 style="color:grey;text-align:center;">Or Sign In Using</h6>
               <span style="margin-left:95px;"><img src="image/social.png" height="40px"></span>
         </div>
@@ -244,15 +259,15 @@ function off() {
               <img src="image/round-delete-button.png" onclick="off()" style="height:30px; width: 30px;">
               <br><br>
               <h1 style="text-align:center; color: black;"><strong>Create Your Account</strong></h1>
-                <form id="createaccount" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
+                <!-- <form id="createaccount" method="post" action="<?= $_SERVER['PHP_SELF']; ?>"> -->
+                <form id="createaccount" method="post" action="<?= home.html ?>">
                   <input type="text" id="name" name="name" size="40" style="height:35px;" required placeholder="Name"/>
-                  <input type="text" id="userid" name="userid" size="40" style="height:35px;" required placeholder ="User ID"/>
                   <input type="email" id="email" name="email" size="40" style="height:35px;" required placeholder="Email"/>
                   <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required placeholder="Telegram Username"/>
                   <input type="password" name="password" size="40" style="height:35px;" required placeholder="Password"/>
                   <input type="password" name="re-password" size="40" style="height:35px;" required placeholder="Confirm Password"/>
                   <!-- <label id="pwderror2" style="color:red;visibility:hidden;">Password doesn't match </label> -->
-                  <button type="submit" name="create_submit" onclick="off()" class="button">Create</button> 
+                  <button type="submit" name="create_submit" onclick="off()" class="button">Create</button>
                 </form>
             </div>
           </div>
@@ -260,36 +275,38 @@ function off() {
 
         <?php
           if(isset($_POST['create_submit'])){
-            $userid = $_POST['userid'];
             $password = $_POST['password'];
             $repassword = $_POST['re-password'];
             $name = $_POST['name'];
             $email = $_POST['email'];
-            $telegram_username = $_POST['tele'];
+            $tele_username = $_POST['tele'];
+
+            $_SESSION['name'] = $name;
+            $_SESSION['email'] = $email;
 
             // if ($password != $repassword){
             //     $error = "Password doesn't match";
             // }
 
             // else {
-              $user = (object) array('userid' => $userid ,'password' => $password,'name' => $name, 'email' => $email, 'telegram_username' => $telegram_username);
+              $user = (object) array('name' => $name ,'email' => $email,'tele_username' => $tele_username, 'password' => $password);
 
               $userdao = new UserDAO();
               $user = $userdao -> addUser($user);
             // }
           }
-            
+
           // if (isset($error)){
           //     {?>
                    <script>
           //             document.getElementById("pwderror2").style.visibility = "visible";
           //         </script>
-               <?php 
+               <?php
           // }
         // ?>
         </div>
 
-        
+
         </div>
 
         <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
@@ -299,5 +316,5 @@ function off() {
     </div>
   </div>
   <hr/>
-  
+
 </header>

@@ -27,6 +27,23 @@ class HistoryDAO {
 
     return $isAddOK;
   }
+  
+  //parameter: date and userid
+  public function deleteTimeline($title){
+    $sql = 'delete from history where title=:title';
+    
+    $connMgr = new ConnectionManager();
+    $conn = $connMgr->getConnection();
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+    // $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+    
+    $stmt->execute();
+    $count = $stmt->rowCount();
+    
+    return $count;
+  }
 
   //parameter: date and userid
   public function getTimeLine(){

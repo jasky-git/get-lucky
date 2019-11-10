@@ -68,9 +68,15 @@
                     <h2 style="text-align:center">Create New Account</h2>
                 <form method="post" action="create_account_process.php">
                     <br>
-                    <label>User ID</label><br>
-                    <input type="text" id="userid" name="userid" size="40" style="height:35px;" required />
-                    <br><br>
+                    <label>Name</label><br>
+                    <input type="text" id="name" name="name" size="40" style="height:35px;" required />
+                    <br>
+                    <label>Email</label><br>
+                    <input type="email" id="email" name="email" size="40" style="height:35px;" required />
+                    <br>
+                    <label>Telegram Username</label><br>
+                    <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required />
+                    <br>
                     <label>Password</label><br>
                     <input type="password" name="password" size="40" style="height:35px;" required />
                     <br>
@@ -81,15 +87,6 @@
                     <br>
                     <label id="pwderror2" style="color:red;visibility:hidden;">Password doesn't match </label>
                     <br>
-                    <label>Name</label><br>
-                    <input type="text" id="name" name="name" size="40" style="height:35px;" required />
-                    <br><br>
-                    <label>Email</label><br>
-                    <input type="email" id="email" name="email" size="40" style="height:35px;" required />
-                    <br><br>
-                    <label>Telegram Username</label><br>
-                    <input type="text" id="tele" name="tele"  size="40" style="height:35px;" required />
-                    <br><br>
                     <button type="submit" class="button">Create Account</button> 
                 </form>
                 <input type="button" class="LoginButton" value="Already owned an account? Login here" onclick="window.location.href='login.php'" />

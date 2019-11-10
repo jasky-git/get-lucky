@@ -1,33 +1,24 @@
 <?php
-    require_once 'UserDAO.php';
+  session_start();
+  unset($_SESSION['error']);
+  require_once 'UserDAO.php';
+
+  $name = $_POST['name'];
+  $password = $_POST['password'];
+
+  $userdao = new UserDAO();
+  $user = $userdao -> getUser($name, $password);
+
+  if(empty($user) && $user == null) {
+    echo " alert('Invalid Login!'); ";
+    header("Location: home.html");
+    $_SESSION['error'] = 'Invalid username or password!';
+  }
+
+  $_SESSION['userid'] = $user->userid;
+  $_SESSION['name'] = $user->name;
+  $_SESSION['email'] = $user->email;
+
+  header('Location: home.html');
+
 ?>
-<html>
-    <head>
-    </head>
-
-    <body>
-        <h1>Authenticate</h1>
-        <?php
-
-            $userid = $_POST['userid'];
-            $password = $_POST['password'];
-
-            $userdao = new UserDAO();
-            $user = $userdao -> getUser($userid);
-
-
-            if (!empty($user)) {
-                if (strlen($userid) == strlen($user->userid) && $userid === $user->userid && $user->authenticate($password)) {
-                    $_SESSION['userid'] = $userid;
-                    header("Location: home.html");
-                    exit();
-                }
-            }
-
-            $_SESSION['error'] = 'Invalid username or password!';
-
-            header('Location:login.php');
-
-        ?>
-    </body>
-</html>
