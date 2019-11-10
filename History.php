@@ -8,7 +8,7 @@ class History {
     public $address;
     public $lat;
     public $lng;
-    public $date;
+    public $datee;
 
     public function __construct() {
         $get_arguments = func_get_args();
@@ -40,7 +40,7 @@ class History {
         $this->lat = $lat;
         $this->lng = $lng;
         $this->title = $title;
-        $this->date = $date;
+        $this->datee = $datee;
         $this->userId = $userId;
     }
 }
