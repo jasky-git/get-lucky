@@ -110,6 +110,7 @@
     font-size: 12px;
     margin-top:20px;
     margin-left:0px;
+    margin-bottom:10px;
   }
 
   .NewAccountButton {
@@ -247,7 +248,7 @@ function off() {
               <hr/>
 
               <h6 style="color:grey;text-align:center;">Or Sign In Using</h6>
-              <span style="margin-left:95px;"><img src="image/social.png" height="40px"></span>
+              <span><img src="image/social.png" height="40px"></span>
         </div>
 
         <div id="overlay">

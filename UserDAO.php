@@ -4,14 +4,20 @@ require_once 'User.php';
 
 class UserDAO {
     
+<<<<<<< HEAD
     public function getUser($name, $password) {
         $sql = 'select * from user where name=:name AND password=:password';
+=======
+    public function getUser($userid) {
+        $sql = 'select * from user where userid=:userid';
+>>>>>>> parent of e723bf2... Update on login function
 
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
         
         $stmt = $conn->prepare($sql);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
+<<<<<<< HEAD
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->execute();
@@ -19,6 +25,12 @@ class UserDAO {
         $user = array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             return new user($row['userid'], $row['name'], $row['email'], $row['tele_username'], $row['password']);
+=======
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->execute();
+        while($row = $stmt->fetch()) {
+            return new User($row['userid'], $row['password'], $row['name'], $row['email'], $row['telegram_username']);
+>>>>>>> parent of e723bf2... Update on login function
         }
     }
 
