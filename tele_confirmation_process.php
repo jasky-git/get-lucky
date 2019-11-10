@@ -1,11 +1,12 @@
 <?php
   session_start();
   
+  $user = $_SESSION['name'];
   $title = $_POST['title'];
+  
   //Telegram confirmation
-  $tele_name = "Lucky User";
+  $tele_name = $_SESSION['name'];
   $token = "";
-  $chatid = "";
 
   $data = [
         'chat_id' => '',

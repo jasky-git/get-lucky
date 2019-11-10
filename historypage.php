@@ -1,3 +1,6 @@
+<?php
+  error_reporting(0);
+?>
 <html>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -44,9 +47,9 @@
 
     </style>
     <?php 
+      include 'include/authenticate_session.php';
       include 'nav.php';
       require 'HistoryDAO.php';
-      include("include/authenticate_session.php");
     ?>
   </head>
 <body>

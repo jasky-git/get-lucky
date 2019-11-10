@@ -1,7 +1,6 @@
 <?php
-    require_once 'UserDAO.php';
-    session_start();
-
+  require_once 'UserDAO.php';
+  session_start();
 
   $name = $_POST['name'];
   $password = $_POST['password'];

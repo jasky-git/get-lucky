@@ -22,8 +22,8 @@
     
     <h5>
       <?php 
-        include "nav.php"; 
         include 'include/authenticate_session.php';
+        include "nav.php"; 
         include 'HistoryDAO.php';
         include 'include/calculate_process.php';
       ?>
