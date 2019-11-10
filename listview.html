@@ -168,6 +168,7 @@
         let categories = '';
         let arr = [];
         let timeArr = '';
+        let submitted = false;
         // categories,startVenue,startTime,endTime,dte,title
 
         /*--------- STARTUP FUNCTION ---------*/
@@ -249,7 +250,10 @@
             console.log(startTime);
             console.log(endTime);
 
-            getAPIData(categories,startVenue,startTime,endTime,dte,title);
+            if(!submitted) {
+                getAPIData(categories,startVenue,startTime,endTime,dte,title);
+                submitted = true;
+            }
 
             // validate start time < end time
             if(startTime>endTime) {
